@@ -1,0 +1,14 @@
+body {
+	margin: 0 auto;
+	margin-top: 10px;
+	width: 900px;
+	font-size: 13px;
+	font-family: Arial;
+	color: #DDDDDD;
+	background-color: black;
+}
+
+#scene {
+	width: 700px;
+	height: 700px;
+}
