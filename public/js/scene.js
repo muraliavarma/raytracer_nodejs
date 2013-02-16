@@ -3,15 +3,47 @@ function setupScene() {
 	ctx.fillStyle = '#FF0000';
 	ctx.fillRect(50, 25, 150, 100);
 	ctx.strokeStyle = 'blue';
-	// ctx.beginPath();
 	ctx.moveTo(10, 10);
 	ctx.lineTo(150, 100);
-	// ctx.endPath();
 	ctx.stroke();
 }
 
 function doRender() {
-	var sceneData = 'yo';	//this will contains collection of objects 
+	var sceneData = {
+		primitives: [{
+			type: 'sphere',
+			center: {
+				x: 10, y: 10, z: 10
+			},
+			radius: 5,
+			material: {
+				type: 'diffuse',
+				color: {
+					r: 255, g: 0, b: 0
+				}
+			}
+		}],
+		lights: [{
+			type: 'point',
+			position: {
+				x: 20, y: 20, z: 0
+			},
+			color: {
+				r: 100, g: 100, b: 100
+			}
+		}],
+		camera: {
+			position: {
+				x: 0, y: 0, z: 0
+			},
+			look: {
+				x: 0, y: 0, z: 1
+			},
+			up: {
+				x: 0, y: 1, z: 0
+			}
+		}
+	};
 	socket.emit('doRender', {
 		scene: sceneData,
 		width: 300,
@@ -27,10 +59,10 @@ function initRenderedImage(data) {
 }
 
 function updateRenderedImage(data) {
-	setPixel(renderedImageData, data.x, data.y, data.r, data.g, data.b, 255);
+	setPixel(data.x, data.y, data.r, data.g, data.b, 255);
 }
 
-function setPixel(imageData, x, y, r, g, b, a) {
+function setPixel(x, y, r, g, b, a) {
 	renderedCtx.fillStyle = 'rgba(' + r + ', ' + g + ', ' + b + ', ' + 255 + ')';
 	renderedCtx.fillRect(x, y, 1, 1);
 }
