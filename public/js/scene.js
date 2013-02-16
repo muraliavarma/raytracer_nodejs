@@ -9,3 +9,32 @@ function setupScene() {
 	// ctx.endPath();
 	ctx.stroke();
 }
+
+function doRender() {
+	var sceneData = 'yo';	//this will contains collection of objects 
+	socket.emit('doRender', {
+		scene: sceneData,
+		width: 300,
+		height: 400
+	});
+}
+
+function initRenderedImage(data) {
+	var res = document.getElementById('rendered');
+	res.width = res.style.width = data.width;
+	res.height = res.style.height = data.height;
+	renderedCtx = res.getContext('2d');
+}
+
+function updateRenderedImage(data) {
+	setPixel(renderedImageData, data.x, data.y, data.r, data.g, data.b, 255);
+}
+
+function setPixel(imageData, x, y, r, g, b, a) {
+	renderedCtx.fillStyle = 'rgba(' + r + ', ' + g + ', ' + b + ', ' + 255 + ')';
+	renderedCtx.fillRect(x, y, 1, 1);
+}
+
+function finishRenderedImage() {
+	//do something once the image is rendered
+}

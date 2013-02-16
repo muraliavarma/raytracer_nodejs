@@ -1,8 +1,11 @@
 var express = require('express')
-  , app = express()
-  , server = require('http').createServer(app)
-  , io = require('socket.io').listen(server)
-  , path = require('path');
+	, app = express()
+	, server = require('http').createServer(app)
+	, io = require('socket.io').listen(server)
+	, path = require('path')
+	, renderer = require('./core/renderer/Renderer');
+
+var _socket;
 
 app.configure(function() {
 	// app.use('/js', express.static(__dirname + '/public/js'));
@@ -12,12 +15,16 @@ app.configure(function() {
 server.listen(8080);
 
 app.get('/', function (req, res) {
-  res.sendfile(path.resolve('public', 'index.html'));
+	res.sendfile(path.resolve('public', 'index.html'));
 });
 
 io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'jaajaaajaaa :D' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
+	_socket = socket;
+	socket.on('doRender', function (data) {
+		socket.emit('startRender', {
+			width: data.width,
+			height: data.height
+		});
+		renderer.render(data, socket);
+	});
 });

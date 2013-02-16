@@ -9,6 +9,13 @@ body {
 }
 
 #scene {
-	width: 700px;
-	height: 700px;
+	width: 500px;
+	height: 500px;
+	border: 1px dashed;
+}
+
+#rendered {
+	width: 0px;
+	height: 0px;
+	border: 1px dashed;
 }
