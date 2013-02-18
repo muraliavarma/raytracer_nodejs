@@ -11,3 +11,13 @@ Point.prototype.distanceToSquared = function(pt) {
 Point.prototype.distanceTo = function(pt) {
 	return Math.sqrt(this.distanceToSquared(pt));
 };
+
+Point.prototype.dot = function(v2) {
+	return this.x * v2.x + this.y * v2.y + this.z * v2.z;
+};
+
+Point.prototype.add = function(vector) {
+	return new Point(this.x + vector.x, this.y + vector.y, this.z + vector.z);
+};
+
+module.exports = Point;

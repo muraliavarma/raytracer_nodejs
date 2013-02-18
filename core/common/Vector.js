@@ -33,5 +33,7 @@ Vector.prototype.normalize = function() {
 	if (len == 0) {
 		return new Vector(0, 0, 0);
 	}
-	return this.multiply(1/len));
+	return this.multiply(1/len);
 }
+
+module.exports = Vector;

@@ -41,7 +41,8 @@ function doRender() {
 			},
 			up: {
 				x: 0, y: 1, z: 0
-			}
+			},
+			aspectRatio: 4/3
 		}
 	};
 	socket.emit('doRender', {

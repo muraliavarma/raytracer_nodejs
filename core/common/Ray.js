@@ -1,8 +1,10 @@
 function Ray(o, d) {
 	this.origin = o;
-	this.direction = d;
+	this.direction = d.normalize();
 }
 
-Ray.prototype.dot = function(vector) {
-	
+Ray.prototype.pointAtDistance = function(dist) {
+	return this.origin.add(this.direction.multiply(dist));
 };
+
+module.exports = Ray;
