@@ -1,7 +1,16 @@
+var Vector = require('./Vector');
+
 function Point(a, b, c) {
-	this.x = a;
-	this.y = b;
-	this.z = c;
+	if (b != undefined && c != undefined) {
+		this.x = a;
+		this.y = b;
+		this.z = c;
+	}
+	else {
+		this.x = a.x;
+		this.y = a.y;
+		this.z = a.z;
+	}
 }
 
 Point.prototype.distanceToSquared = function(pt) {
@@ -18,6 +27,14 @@ Point.prototype.dot = function(v2) {
 
 Point.prototype.add = function(vector) {
 	return new Point(this.x + vector.x, this.y + vector.y, this.z + vector.z);
+};
+
+Point.prototype.sub = function(vector) {
+	return new Point(this.x - vector.x, this.y - vector.y, this.z - vector.z);
+};
+
+Point.prototype.vectorTo = function(point) {
+	return new Vector(point.x - this.x, point.y - this.y, point.z - this.z);
 };
 
 module.exports = Point;

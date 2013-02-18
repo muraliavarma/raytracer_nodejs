@@ -1,7 +1,14 @@
 function Vector(a, b, c) {
-	this.x = a;
-	this.y = b;
-	this.z = c;
+	if (b != undefined && c != undefined) {
+		this.x = a;
+		this.y = b;
+		this.z = c;
+	}
+	else {
+		this.x = a.x;
+		this.y = a.y;
+		this.z = a.z;
+	}
 }
 
 Vector.prototype.dot = function(v2) {

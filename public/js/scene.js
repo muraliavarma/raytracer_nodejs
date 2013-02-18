@@ -42,14 +42,12 @@ function doRender() {
 			up: {
 				x: 0, y: 1, z: 0
 			},
-			aspectRatio: 4/3
+			zoom: 1,
+			imageWidth: 300,
+			imageHeight: 400
 		}
 	};
-	socket.emit('doRender', {
-		scene: sceneData,
-		width: 300,
-		height: 400
-	});
+	socket.emit('doRender', sceneData);
 }
 
 function initRenderedImage(data) {

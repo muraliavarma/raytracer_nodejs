@@ -22,8 +22,8 @@ io.sockets.on('connection', function (socket) {
 	_socket = socket;
 	socket.on('doRender', function (data) {
 		socket.emit('startRender', {
-			width: data.width,
-			height: data.height
+			width: data.camera.imageWidth,
+			height: data.camera.imageHeight
 		});
 		renderer.render(data, socket);
 	});
