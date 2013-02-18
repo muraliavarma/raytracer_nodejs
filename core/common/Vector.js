@@ -15,3 +15,23 @@ Vector.prototype.cross = function(v2) {
 
 	return new Vector(a, b, c);
 };
+
+Vector.prototype.lengthSquared = function() {
+	return this.x * this.x + this.y * this.y + this.z * this.z;
+}
+
+Vector.prototype.length = function() {
+	return Math.sqrt(this.lengthSquared());
+}
+
+Vector.prototype.multiply = function(s) {
+	return new Vector(1.0 * s * this.x, 1.0 * s * this.y, 1.0 * s * this.z);
+}
+
+Vector.prototype.normalize = function() {
+	var len = this.length();
+	if (len == 0) {
+		return new Vector(0, 0, 0);
+	}
+	return this.multiply(1/len));
+}
