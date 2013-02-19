@@ -22,7 +22,7 @@ function doRender() {
 				x: 0, y: 1, z: 0
 			},
 			width: 8,
-			height: 5,
+			height: 10,
 			material: {
 				type: 'diffuse',
 				color: {
@@ -53,7 +53,7 @@ function doRender() {
 		}],
 		camera: {
 			position: {
-				x: 0, y: 0, z: -20
+				x: 0, y: 0, z: -10
 			},
 			look: {
 				x: 0, y: 0, z: 1
@@ -61,7 +61,7 @@ function doRender() {
 			up: {
 				x: 0, y: 1, z: 0
 			},
-			zoom: 2,
+			zoom: 1,
 			imageWidth: 300,
 			imageHeight: 400
 		}

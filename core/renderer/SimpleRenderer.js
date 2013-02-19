@@ -17,8 +17,8 @@ exports.render = function(data, socket) {
 	var cameraPlaneCenter = cameraPos.add(cameraLook.normalize().multiply(data.camera.zoom));
 	var cameraPlane = new Plane(cameraPlaneCenter, cameraLook.multiply(-1));
 	var png = new PNG({
-		height: data.camera.imageWidth,
-		width: data.camera.imageHeight
+		height: data.camera.imageHeight,
+		width: data.camera.imageWidth
 	});
 	var fileName = "image_" + (new Date()).getTime();
 	for (var w = 0; w < data.camera.imageWidth; w++) {
