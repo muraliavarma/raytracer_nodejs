@@ -42,20 +42,25 @@ exports.render = function(data, socket) {
 				png.data[idx+2] = 255;
 				png.data[idx+3] = 255;
 			}
-			socket.emit('renderProgress', {
-				percent: (100.0 * (w * data.camera.imageHeight + h)/(data.camera.imageWidth * data.camera.imageHeight)) | 0
-			});
+			var percent = (100.0 * (w * data.camera.imageHeight + h)/(data.camera.imageWidth * data.camera.imageHeight)) | 0;
+			if (percent % 10 == 0) {
+				socket.emit('renderProgress', {
+					percent: percent
+				});
+			}
 		}
 	}
 	socket.emit('renderProgress', {
 		percent: 100
 	});
 
-    png.pack().pipe(fs.createWriteStream('public/images/' + fileName + '.png'));
-	socket.emit('renderComplete', {
-		height: data.camera.imageWidth,
-		width: data.camera.imageHeight,
-		fileName: fileName
-	});
+    var req = png.pack().pipe(fs.createWriteStream('public/images/' + fileName + '.png'));
+    req.on('close', function() {
+		socket.emit('renderComplete', {
+			height: data.camera.imageWidth,
+			width: data.camera.imageHeight,
+			fileName: fileName
+		});
+    });
 
 }
