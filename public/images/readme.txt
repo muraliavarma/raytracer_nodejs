@@ -1,0 +1,1 @@
+This folder contains all the generated images with a timestamp associated with it
