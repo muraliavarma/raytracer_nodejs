@@ -57,13 +57,11 @@ exports.render = function(data, socket) {
 					png.data[idx+3] = 255;
 				}
 			}
-			var percent = (100.0 * (w * data.camera.imageHeight + h)/(data.camera.imageWidth * data.camera.imageHeight)) | 0;
-			if (percent % 10 == 0) {
-				socket.emit('renderProgress', {
-					percent: percent
-				});
-			}
 		}
+		var percent = (100.0 * w/data.camera.imageWidth) | 0;
+		socket.emit('renderProgress', {
+			percent: percent
+		});
 	}
 	socket.emit('renderProgress', {
 		percent: 100
