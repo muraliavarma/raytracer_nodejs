@@ -11,6 +11,25 @@ function setupScene() {
 function doRender() {
 	var sceneData = {
 		primitives: [{
+			type: 'rectangle',
+			center: {
+				x: 0, y: 0, z: 10
+			},
+			normal: {
+				x: 1, y: 1, z: 1
+			},
+			up: {
+				x: 0, y: 1, z: 0
+			},
+			width: 8,
+			height: 5,
+			material: {
+				type: 'diffuse',
+				color: {
+					r: 255, g: 0, b: 0
+				}
+			}
+		},{
 			type: 'sphere',
 			center: {
 				x: 10, y: 10, z: 10
@@ -34,7 +53,7 @@ function doRender() {
 		}],
 		camera: {
 			position: {
-				x: 0, y: 0, z: 0
+				x: 0, y: 0, z: -20
 			},
 			look: {
 				x: 0, y: 0, z: 1
@@ -42,7 +61,7 @@ function doRender() {
 			up: {
 				x: 0, y: 1, z: 0
 			},
-			zoom: 1,
+			zoom: 2,
 			imageWidth: 300,
 			imageHeight: 400
 		}

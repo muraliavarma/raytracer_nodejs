@@ -16,7 +16,6 @@ exports.render = function(data, socket) {
 	var aspectRatio = 1.0 * data.camera.imageWidth / data.camera.imageHeight;
 	var cameraPlaneCenter = cameraPos.add(cameraLook.normalize().multiply(data.camera.zoom));
 	var cameraPlane = new Plane(cameraPlaneCenter, cameraLook.multiply(-1));
-	var primitive = new Rectangle(new Point(0, 0, 10), new Vector(0, 0, 1), new Vector(0, 0, 1), 8, 5);
 	var png = new PNG({
 		height: data.camera.imageWidth,
 		width: data.camera.imageHeight
@@ -29,18 +28,34 @@ exports.render = function(data, socket) {
 			var y = (h / data.camera.imageHeight) - 0.5;
 			var cameraPlaneIntersectionPoint = cameraPlaneCenter.add(cameraRight.multiply(x)).add(cameraUp.multiply(y));
 			var ray = new Ray(cameraPos, cameraPos.vectorTo(cameraPlaneIntersectionPoint));
-			var intersectionPoint = primitive.intersection(ray);
-			if (!intersectionPoint) {
-				png.data[idx] = 0;
-				png.data[idx+1] = 0;
-				png.data[idx+2] = 0;
-				png.data[idx+3] = 0;
-			}
-			else {
-				png.data[idx] = 255;
-				png.data[idx+1] = intersectionPoint.distanceToSquared(cameraPos) | 0;
-				png.data[idx+2] = 255;
-				png.data[idx+3] = 255;
+			for (var i = 0; i < data.primitives.length; i++) {
+				var primitive = data.primitives[i];
+				var obj;
+				if (primitive.type == "rectangle") {
+					obj = new Rectangle(
+							new Point(primitive.center.x, primitive.center.y, primitive.center.z),
+							new Vector(primitive.normal.x, primitive.normal.y, primitive.normal.z),
+							new Vector(primitive.up.x, primitive.up.y, primitive.up.z),
+							primitive.width,
+							primitive.height
+						);
+				}
+				else {
+					continue;
+				}
+				var intersectionPoint = obj.intersection(ray);
+				if (!intersectionPoint) {
+					png.data[idx] = 0;
+					png.data[idx+1] = 0;
+					png.data[idx+2] = 0;
+					png.data[idx+3] = 255;
+				}
+				else {
+					png.data[idx] = 255;
+					png.data[idx+1] = intersectionPoint.distanceToSquared(cameraPos) | 0;
+					png.data[idx+2] = 255;
+					png.data[idx+3] = 255;
+				}
 			}
 			var percent = (100.0 * (w * data.camera.imageHeight + h)/(data.camera.imageWidth * data.camera.imageHeight)) | 0;
 			if (percent % 10 == 0) {
