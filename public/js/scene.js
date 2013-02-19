@@ -51,21 +51,27 @@ function doRender() {
 }
 
 function initRenderedImage(data) {
-	var res = document.getElementById('rendered');
-	res.width = res.style.width = data.width;
-	res.height = res.style.height = data.height;
-	renderedCtx = res.getContext('2d');
+	// var res = document.getElementById('rendered');
+	// res.width = res.style.width = data.width;
+	// res.height = res.style.height = data.height;
+	// renderedCtx = res.getContext('2d');
 }
 
 function updateRenderedImage(data) {
-	setPixel(data.x, data.y, data.r, data.g, data.b, 255);
+	// setPixel(data.x, data.y, data.r, data.g, data.b, 255);
+	document.getElementById("progress").innerHTML = data.percent + "%";
 }
 
-function setPixel(x, y, r, g, b, a) {
-	renderedCtx.fillStyle = 'rgba(' + r + ', ' + g + ', ' + b + ', ' + 255 + ')';
-	renderedCtx.fillRect(x, y, 1, 1);
-}
+// function setPixel(x, y, r, g, b, a) {
+// 	renderedCtx.fillStyle = 'rgba(' + r + ', ' + g + ', ' + b + ', ' + 255 + ')';
+// 	renderedCtx.fillRect(x, y, 1, 1);
+// }
 
-function finishRenderedImage() {
-	//do something once the image is rendered
+function finishRenderedImage(data) {
+	if (!data) {
+		return;
+	}
+	rendered.style.height = data.height;
+	rendered.style.width = data.width;
+	rendered.src = "images/" + data.fileName + ".png";
 }

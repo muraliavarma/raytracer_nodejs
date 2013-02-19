@@ -5,10 +5,7 @@ var express = require('express')
 	, path = require('path')
 	, renderer = require('./core/renderer/Renderer');
 
-var _socket;
-
 app.configure(function() {
-	// app.use('/js', express.static(__dirname + '/public/js'));
 	app.use(express.static(__dirname + '/public'));
 });
 
@@ -19,7 +16,6 @@ app.get('/', function (req, res) {
 });
 
 io.sockets.on('connection', function (socket) {
-	_socket = socket;
 	socket.on('doRender', function (data) {
 		socket.emit('startRender', {
 			width: data.camera.imageWidth,
