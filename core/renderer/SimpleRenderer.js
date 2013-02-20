@@ -10,7 +10,7 @@ var fs = require('fs');
 exports.render = function(data, socket) {
 	var cameraPos = new Point(data.camera.position);
 	var cameraLook = new Vector(data.camera.look).normalize();
-	var cameraUp = new Vector(data.camera.up).normalize().multiply(-1);
+	var cameraUp = new Vector(data.camera.up).normalize();
 	var cameraRight = cameraUp.cross(cameraLook).normalize();
 
 	var aspectRatio = 1.0 * data.camera.imageWidth / data.camera.imageHeight;
@@ -24,7 +24,7 @@ exports.render = function(data, socket) {
 	for (var w = 0; w < data.camera.imageWidth; w++) {
 		var x = aspectRatio * ((w / data.camera.imageWidth) - 0.5);
 		for (var h = 0; h < data.camera.imageHeight; h++) {
-			var idx = (png.width * h + w) << 2;
+			var idx = (png.width * (png.height - h) + w) << 2;
 			var y = (h / data.camera.imageHeight) - 0.5;
 			var cameraPlaneIntersectionPoint = cameraPlaneCenter.add(cameraRight.multiply(x)).add(cameraUp.multiply(y));
 			var ray = new Ray(cameraPos, cameraPos.vectorTo(cameraPlaneIntersectionPoint));
