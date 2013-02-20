@@ -51,7 +51,7 @@ exports.render = function(data, socket) {
 					png.data[idx+3] = 255;
 				}
 				else {
-					var color = _getColor(data.lights, intersectionPoint, shape.getNormal(intersectionPoint));
+					var color = _getColor(data.lights, primitive.material, intersectionPoint, shape.getNormal(intersectionPoint));
 					png.data[idx] = color.r;
 					png.data[idx+1] = color.g;
 					png.data[idx+2] = color.b;
@@ -78,8 +78,9 @@ exports.render = function(data, socket) {
     });
 }
 
-function _getColor(lights, point, normal) {
-	var color = new Color(255, 255, 255);
+function _getColor(lights, material, point, normal) {
+	var color = new Color(material.color.r, material.color.g, material.color.b);
+	console.log(color.getColor());
 	for (var i = 0; i < lights.length; i++) {
 		var light = lights[i];
 		var lightColor = new Color(light.color.r, light.color.g, light.color.b);

@@ -11,6 +11,9 @@ function Rectangle(point, normal, up, width, height) {
 
 Rectangle.prototype.getIntersection = function(ray) {
 	var intersectionPoint = Plane.prototype.getIntersection.call(this, ray);
+	if (!intersectionPoint) {
+		return null;
+	}
 	var diff = new Vector(intersectionPoint.x - this.point.x, intersectionPoint.y - this.point.y, intersectionPoint.z - this.point.z);
 	if (2 * Math.abs(diff.dot(this.up)) < this.height && 2 * Math.abs(diff.dot(this.right)) < this.width) {
 		return intersectionPoint;

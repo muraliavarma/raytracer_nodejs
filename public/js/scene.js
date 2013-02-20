@@ -13,20 +13,20 @@ function doRender() {
 		primitives: [{
 			type: 'rectangle',
 			center: {
-				x: 0, y: 0, z: 10
+				x: 0, y: 10, z: 40
 			},
 			normal: {
-				x: 1, y: 1, z: 1
+				x: 0, y: 1, z: 0
 			},
 			up: {
-				x: 0, y: 1, z: 0
+				x: 0, y: 0, z: 1
 			},
 			width: 8,
 			height: 10,
 			material: {
 				type: 'diffuse',
 				color: {
-					r: 255, g: 0, b: 0
+					r: 255, g: 255, b: 255
 				}
 			}
 		},{
@@ -45,10 +45,10 @@ function doRender() {
 		lights: [{
 			type: 'point',
 			position: {
-				x: 20, y: 0, z: 0
+				x: 20, y: -20, z: 100
 			},
 			color: {
-				r: 100, g: 100, b: 100
+				r: 10, g: 10, b: 10
 			}
 		}],
 		camera: {

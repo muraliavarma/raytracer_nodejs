@@ -1,6 +1,6 @@
 function Plane(point, normal) {
 	this.point = point;
-	this.normal = normal;
+	this.normal = normal.normalize();
 }
 
 Plane.prototype.getIntersection = function(ray) {
