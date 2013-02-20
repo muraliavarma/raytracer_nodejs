@@ -62,8 +62,8 @@ function doRender() {
 				x: 0, y: 1, z: 0
 			},
 			zoom: 1,
-			imageWidth: 600,
-			imageHeight: 800
+			imageWidth: 300,
+			imageHeight: 400
 		}
 	};
 	socket.emit('doRender', sceneData);

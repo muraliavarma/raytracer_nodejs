@@ -78,8 +78,8 @@ exports.render = function(data, socket) {
     var req = png.pack().pipe(fs.createWriteStream('public/images/' + fileName + '.png'));
     req.on('close', function() {
 		socket.emit('renderComplete', {
-			height: data.camera.imageWidth,
-			width: data.camera.imageHeight,
+			height: data.camera.imageHeight,
+			width: data.camera.imageWidth,
 			fileName: fileName
 		});
     });
