@@ -80,7 +80,7 @@ exports.render = function(data, socket) {
 
 function _getColor(lights, material, point, normal) {
 	var color = new Color(material.color.r, material.color.g, material.color.b);
-	console.log(color.getColor());
+	var res = new Color(0, 0, 0);
 	for (var i = 0; i < lights.length; i++) {
 		var light = lights[i];
 		var lightColor = new Color(light.color.r, light.color.g, light.color.b);
@@ -88,9 +88,9 @@ function _getColor(lights, material, point, normal) {
 			var lightVector = new Vector(light.position.x - point.x, light.position.y - point.y, light.position.z - point.z).normalize();
 			var dot = normal.dot(lightVector);
 			if (dot > 0) {
-				color.add(color.multiply(lightColor).multiply(dot));
+				res.add(color.multiply(lightColor).multiply(dot));
 			}
 		}
 	}
-	return color.getColor();
+	return res.getColor();
 }

@@ -13,7 +13,7 @@ function doRender() {
 		primitives: [{
 			type: 'rectangle',
 			center: {
-				x: 0, y: 10, z: 40
+				x: 0, y: -10, z: 20
 			},
 			normal: {
 				x: 0, y: 1, z: 0
@@ -45,10 +45,10 @@ function doRender() {
 		lights: [{
 			type: 'point',
 			position: {
-				x: 20, y: -20, z: 100
+				x: -10, y: 0, z: 20
 			},
 			color: {
-				r: 10, g: 10, b: 10
+				r: 100, g: 100, b: 100
 			}
 		}],
 		camera: {
