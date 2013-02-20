@@ -13,7 +13,7 @@ function doRender() {
 		primitives: [{
 			type: 'rectangle',
 			center: {
-				x: 0, y: -10, z: 20
+				x: 0, y: -5, z: 20
 			},
 			normal: {
 				x: 0, y: 1, z: 0
@@ -32,7 +32,7 @@ function doRender() {
 		},{
 			type: 'sphere',
 			center: {
-				x: 5, y: -5, z: 35
+				x: 2, y: -2, z: 25
 			},
 			radius: 1,
 			material: {
@@ -45,7 +45,7 @@ function doRender() {
 		lights: [{
 			type: 'point',
 			position: {
-				x: 0, y: -8, z: 20
+				x: 0, y: 0, z: 20
 			},
 			color: {
 				r: 100, g: 100, b: 100
