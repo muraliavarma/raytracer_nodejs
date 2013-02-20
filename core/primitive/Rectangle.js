@@ -9,13 +9,17 @@ function Rectangle(point, normal, up, width, height) {
 	this.right = up.cross(normal).normalize();
 }
 
-Rectangle.prototype.intersection = function(ray) {
-	var intersectionPoint = Plane.prototype.intersection.call(this, ray);
+Rectangle.prototype.getIntersection = function(ray) {
+	var intersectionPoint = Plane.prototype.getIntersection.call(this, ray);
 	var diff = new Vector(intersectionPoint.x - this.point.x, intersectionPoint.y - this.point.y, intersectionPoint.z - this.point.z);
 	if (2 * Math.abs(diff.dot(this.up)) < this.height && 2 * Math.abs(diff.dot(this.right)) < this.width) {
 		return intersectionPoint;
 	}
 	return null;
+}
+
+Rectangle.prototype.getNormal = function(point) {
+	return this.normal;
 }
 
 module.exports = Rectangle;

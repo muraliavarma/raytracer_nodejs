@@ -45,7 +45,7 @@ function doRender() {
 		lights: [{
 			type: 'point',
 			position: {
-				x: 20, y: 20, z: 0
+				x: 20, y: 0, z: 0
 			},
 			color: {
 				r: 100, g: 100, b: 100

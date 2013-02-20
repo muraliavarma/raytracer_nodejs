@@ -3,11 +3,11 @@ var Ray = require('../common/Ray');
 var Vector = require('../common/Vector');
 var Plane = require('../primitive/Plane');
 var Rectangle = require('../primitive/Rectangle');
+var Color = require('../image/Color');
 var PNG = require("pngjs").PNG;
 var fs = require('fs');
 
 exports.render = function(data, socket) {
-	console.log(PNG);
 	var cameraPos = new Point(data.camera.position);
 	var cameraLook = new Vector(data.camera.look).normalize();
 	var cameraUp = new Vector(data.camera.up).normalize();
@@ -30,9 +30,9 @@ exports.render = function(data, socket) {
 			var ray = new Ray(cameraPos, cameraPos.vectorTo(cameraPlaneIntersectionPoint));
 			for (var i = 0; i < data.primitives.length; i++) {
 				var primitive = data.primitives[i];
-				var obj;
+				var shape;
 				if (primitive.type == "rectangle") {
-					obj = new Rectangle(
+					shape = new Rectangle(
 							new Point(primitive.center.x, primitive.center.y, primitive.center.z),
 							new Vector(primitive.normal.x, primitive.normal.y, primitive.normal.z),
 							new Vector(primitive.up.x, primitive.up.y, primitive.up.z),
@@ -43,7 +43,7 @@ exports.render = function(data, socket) {
 				else {
 					continue;
 				}
-				var intersectionPoint = obj.intersection(ray);
+				var intersectionPoint = shape.getIntersection(ray);
 				if (!intersectionPoint) {
 					png.data[idx] = 0;
 					png.data[idx+1] = 0;
@@ -51,9 +51,10 @@ exports.render = function(data, socket) {
 					png.data[idx+3] = 255;
 				}
 				else {
-					png.data[idx] = 255;
-					png.data[idx+1] = intersectionPoint.distanceToSquared(cameraPos) | 0;
-					png.data[idx+2] = 255;
+					var color = _getColor(data.lights, intersectionPoint, shape.getNormal(intersectionPoint));
+					png.data[idx] = color.r;
+					png.data[idx+1] = color.g;
+					png.data[idx+2] = color.b;
 					png.data[idx+3] = 255;
 				}
 			}
@@ -75,5 +76,20 @@ exports.render = function(data, socket) {
 			fileName: fileName
 		});
     });
+}
 
+function _getColor(lights, point, normal) {
+	var color = new Color(255, 255, 255);
+	for (var i = 0; i < lights.length; i++) {
+		var light = lights[i];
+		var lightColor = new Color(light.color.r, light.color.g, light.color.b);
+		if (light.type == 'point') {
+			var lightVector = new Vector(light.position.x - point.x, light.position.y - point.y, light.position.z - point.z).normalize();
+			var dot = normal.dot(lightVector);
+			if (dot > 0) {
+				color.add(color.multiply(lightColor).multiply(dot));
+			}
+		}
+	}
+	return color.getColor();
 }

@@ -3,7 +3,7 @@ function Plane(point, normal) {
 	this.normal = normal;
 }
 
-Plane.prototype.intersection = function(ray) {
+Plane.prototype.getIntersection = function(ray) {
 	if (ray.direction.dot(this.normal) == 0) {
 		return null;
 	}
