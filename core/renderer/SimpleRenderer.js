@@ -10,7 +10,7 @@ var fs = require('fs');
 exports.render = function(data, socket) {
 	var cameraPos = new Point(data.camera.position);
 	var cameraLook = new Vector(data.camera.look).normalize();
-	var cameraUp = new Vector(data.camera.up).normalize();
+	var cameraUp = new Vector(data.camera.up).normalize().multiply(-1);
 	var cameraRight = cameraUp.cross(cameraLook).normalize();
 
 	var aspectRatio = 1.0 * data.camera.imageWidth / data.camera.imageHeight;
