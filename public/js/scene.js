@@ -32,13 +32,13 @@ function doRender() {
 		},{
 			type: 'sphere',
 			center: {
-				x: 10, y: 10, z: 10
+				x: 5, y: -5, z: 35
 			},
-			radius: 5,
+			radius: 1,
 			material: {
 				type: 'diffuse',
 				color: {
-					r: 255, g: 0, b: 0
+					r: 255, g: 0, b: 255
 				}
 			}
 		}],
@@ -62,8 +62,8 @@ function doRender() {
 				x: 0, y: 1, z: 0
 			},
 			zoom: 1,
-			imageWidth: 300,
-			imageHeight: 400
+			imageWidth: 600,
+			imageHeight: 800
 		}
 	};
 	socket.emit('doRender', sceneData);

@@ -22,7 +22,7 @@ Rectangle.prototype.getIntersection = function(ray) {
 }
 
 Rectangle.prototype.getNormal = function(point) {
-	return this.normal;
+	return Plane.prototype.getNormal.call(this, point);
 }
 
 module.exports = Rectangle;

@@ -1,8 +1,11 @@
 var Point = require('../common/Point');
 var Ray = require('../common/Ray');
 var Vector = require('../common/Vector');
+
 var Plane = require('../primitive/Plane');
 var Rectangle = require('../primitive/Rectangle');
+var Sphere = require('../primitive/Sphere');
+
 var Color = require('../image/Color');
 var PNG = require("pngjs").PNG;
 var fs = require('fs');
@@ -25,6 +28,11 @@ exports.render = function(data, socket) {
 		var x = aspectRatio * ((w / data.camera.imageWidth) - 0.5);
 		for (var h = 0; h < data.camera.imageHeight; h++) {
 			var idx = (png.width * (png.height - h) + w) << 2;
+			png.data[idx] = 0;
+			png.data[idx+1] = 0;
+			png.data[idx+2] = 0;
+			png.data[idx+3] = 255;
+
 			var y = (h / data.camera.imageHeight) - 0.5;
 			var cameraPlaneIntersectionPoint = cameraPlaneCenter.add(cameraRight.multiply(x)).add(cameraUp.multiply(y));
 			var ray = new Ray(cameraPos, cameraPos.vectorTo(cameraPlaneIntersectionPoint));
@@ -40,22 +48,21 @@ exports.render = function(data, socket) {
 							primitive.height
 						);
 				}
+				else if (primitive.type == "sphere") {
+					shape = new Sphere(primitive.center.x, primitive.center.y, primitive.center.z, primitive.radius);
+				}
 				else {
 					continue;
 				}
 				var intersectionPoint = shape.getIntersection(ray);
-				if (!intersectionPoint) {
-					png.data[idx] = 0;
-					png.data[idx+1] = 0;
-					png.data[idx+2] = 0;
-					png.data[idx+3] = 255;
-				}
-				else {
+				if (intersectionPoint) {
 					var color = _getColor(data.lights, primitive.material, intersectionPoint, shape.getNormal(intersectionPoint));
 					png.data[idx] = color.r;
 					png.data[idx+1] = color.g;
 					png.data[idx+2] = color.b;
 					png.data[idx+3] = 255;
+				}
+				else {
 				}
 			}
 		}

@@ -11,4 +11,8 @@ Plane.prototype.getIntersection = function(ray) {
 	return ray.pointAtDistance(t);
 }
 
+Plane.prototype.getNormal = function(point) {
+	return this.normal;
+}
+
 module.exports = Plane;
