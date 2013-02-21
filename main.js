@@ -9,7 +9,7 @@ app.configure(function() {
 	app.use(express.static(__dirname + '/public'));
 });
 
-server.listen(8080);
+server.listen(process.env.VCAP_APP_PORT || 8080);
 
 app.get('/', function (req, res) {
 	res.sendfile(path.resolve('public', 'index.html'));
