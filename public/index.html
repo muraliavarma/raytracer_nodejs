@@ -2,13 +2,14 @@
 	<head>
 		<title>NodeJS Raytracer</title>
 		<link rel="stylesheet" href="css/app.css">
+		<script src="/js/three.min.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="/js/connections.js"></script>
 		<script src="/js/scene.js"></script>
 	</head>
 	<body onload="setupScene()">
 		<div align="center"><h2>NodeJS Raytracer</h2></div>
-		<canvas id="scene"></canvas>
+		<div id="sceneDiv"></div>
 		<button type="button" onclick="doRender()">Render!</button>
 		<div id = "progress"></div>
 		<img id = "rendered"></img>
