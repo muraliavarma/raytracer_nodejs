@@ -1,25 +1,41 @@
-function setupScene() {
+var imageWidth = 300;
+var imageHeight = 400;
+var scene;
+var camera;
+var renderer;
 
-	var scene = new THREE.Scene();
-	var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-	var renderer = new THREE.CanvasRenderer();
+function setupScene() {
+	scene = new THREE.Scene();
+	camera = new THREE.PerspectiveCamera(75, imageWidth/imageHeight, 1, 1000);
+	camera.lookAt(new THREE.Vector3(0, 0, 1));
+	renderer = new THREE.CanvasRenderer();
 	var sceneDiv = document.getElementById('sceneDiv');
-	renderer.setSize(500, 500);
+	renderer.setSize(imageWidth, imageHeight);
 	sceneDiv.appendChild(renderer.domElement);
 
-	var geometry = new THREE.CubeGeometry(1,1,1);
-	var material = new THREE.MeshBasicMaterial({color: 0x00ff00});
-	var cube = new THREE.Mesh(geometry, material);
-	scene.add(cube);
+	var geometry = new THREE.CubeGeometry(10,0.1,8);
+	var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+	var plane = new THREE.Mesh(geometry, material);
+	plane.position = new THREE.Vector3(0, -5, 20);
+	scene.add(plane);
 
-	camera.position.z = 5;
+	var radius = 1,
+	segments = 16,
+	rings = 16;
+
+	var sphereMaterial = new THREE.MeshBasicMaterial({color: 0xff00ff});
+	var sphere = new THREE.Mesh(new THREE.SphereGeometry(radius, segments, rings), sphereMaterial);
+	sphere.position = new THREE.Vector3(-2, -2, 25);
+	scene.add(sphere);
+
+	camera.position.z = -10;
 	sceneDiv.onclick = function() {
 		render();
 	}
 	function render() {
 
-		cube.rotation.x += 0.1;
-		cube.rotation.y += 0.1;
+		// plane.rotation.x += 0.1;
+		// plane.rotation.y += 0.1;
 
 		renderer.render(scene, camera);
 	}
@@ -81,8 +97,8 @@ function doRender() {
 				x: 0, y: 1, z: 0
 			},
 			zoom: 1,
-			imageWidth: 300,
-			imageHeight: 400
+			imageWidth: imageWidth,
+			imageHeight: imageHeight
 		}
 	};
 	socket.emit('doRender', sceneData);
