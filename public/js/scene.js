@@ -14,6 +14,7 @@ function setupScene() {
 	far = 1000;
 	
 	camera = new THREE.PerspectiveCamera(fov, imageWidth/imageHeight, near, far);
+	camera.name = 'camera001';
 	camera.lookAt(new THREE.Vector3(0, 0, 1));
 	camera.position = new THREE.Vector3(0, 0,-10);
 	
@@ -57,6 +58,7 @@ function setupScene() {
 }
 
 function doRender() {
+	var sceneData2 = parseScene();
 	var sceneData = {
 		primitives: [{
 			type: 'rectangle',
@@ -120,21 +122,12 @@ function doRender() {
 }
 
 function initRenderedImage(data) {
-	// var res = document.getElementById('rendered');
-	// res.width = res.style.width = data.width;
-	// res.height = res.style.height = data.height;
-	// renderedCtx = res.getContext('2d');
+
 }
 
 function updateRenderedImage(data) {
-	// setPixel(data.x, data.y, data.r, data.g, data.b, 255);
 	document.getElementById("progress").innerHTML = data.percent + "%";
 }
-
-// function setPixel(x, y, r, g, b, a) {
-// 	renderedCtx.fillStyle = 'rgba(' + r + ', ' + g + ', ' + b + ', ' + 255 + ')';
-// 	renderedCtx.fillRect(x, y, 1, 1);
-// }
 
 function finishRenderedImage(data) {
 	if (!data) {
@@ -143,4 +136,8 @@ function finishRenderedImage(data) {
 	rendered.style.height = data.height;
 	rendered.style.width = data.width;
 	rendered.src = "images/" + data.fileName + ".png";
+}
+
+function parseScene() {
+
 }

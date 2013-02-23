@@ -9,7 +9,7 @@ function Sphere(x, y, z, r) {
 
 Sphere.prototype.getIntersection = function(ray) {
 	var a = ray.direction.dot(ray.direction);
-	var oc = new Vector(ray.origin.x - this.x, ray.origin.y - this.y, ray.origin.z - this.z);
+	var oc = new Vector(ray.origin.sub(this));
 	var b = 2 * (oc.dot(ray.direction));
 	var c = oc.dot(oc) - this.r * this.r;
 	var detSq = b * b - 4 * a * c;
@@ -23,7 +23,7 @@ Sphere.prototype.getIntersection = function(ray) {
 }
 
 Sphere.prototype.getNormal = function(point) {
-	return new Vector(point.x - this.x, point.y - this.y, point.z - this.z);
+	return new Vector(point.sub(this));
 }
 
 module.exports = Sphere;
