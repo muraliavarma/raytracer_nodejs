@@ -15,17 +15,20 @@ exports.render = function(data, socket) {
 	var cameraLook = new Vector(data.camera.look).normalize();
 	var cameraUp = new Vector(data.camera.up).normalize();
 	var cameraRight = cameraUp.cross(cameraLook).normalize();
-
 	var aspectRatio = 1.0 * data.camera.imageWidth / data.camera.imageHeight;
-	var cameraPlaneCenter = cameraPos.add(cameraLook.normalize().multiply(data.camera.zoom));
+	var cameraPlaneCenter = cameraPos.add(cameraLook.normalize().multiply(data.camera.near));
 	var cameraPlane = new Plane(cameraPlaneCenter, cameraLook.multiply(-1));
+	var cameraVDist = 2 * Math.tan(data.camera.fov * Math.PI / 360) * data.camera.near;
+	var cameraHDist = cameraVDist * aspectRatio;
+
 	var png = new PNG({
 		height: data.camera.imageHeight,
 		width: data.camera.imageWidth
 	});
 	var fileName = "image_" + (new Date()).getTime();
+
 	for (var w = 0; w < data.camera.imageWidth; w++) {
-		var x = aspectRatio * ((w / data.camera.imageWidth) - 0.5);
+		var x = cameraHDist * ((w / data.camera.imageWidth) - 0.5);
 		for (var h = 0; h < data.camera.imageHeight; h++) {
 			var idx = (png.width * (png.height - h) + w) << 2;
 			png.data[idx] = 0;
@@ -33,7 +36,7 @@ exports.render = function(data, socket) {
 			png.data[idx+2] = 0;
 			png.data[idx+3] = 255;
 
-			var y = (h / data.camera.imageHeight) - 0.5;
+			var y = cameraVDist * ((h / data.camera.imageHeight) - 0.5);
 			var cameraPlaneIntersectionPoint = cameraPlaneCenter.add(cameraRight.multiply(x)).add(cameraUp.multiply(y));
 			var ray = new Ray(cameraPos, cameraPos.vectorTo(cameraPlaneIntersectionPoint));
 			for (var i = 0; i < data.primitives.length; i++) {

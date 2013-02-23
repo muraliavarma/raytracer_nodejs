@@ -3,18 +3,27 @@ var imageHeight = 400;
 var scene;
 var camera;
 var renderer;
+var fov;
+var near;
+var far;
 
 function setupScene() {
 	scene = new THREE.Scene();
-	camera = new THREE.PerspectiveCamera(75, imageWidth/imageHeight, 1, 1000);
+	fov = 75;
+	near = 1;
+	far = 1000;
+	
+	camera = new THREE.PerspectiveCamera(fov, imageWidth/imageHeight, near, far);
 	camera.lookAt(new THREE.Vector3(0, 0, 1));
+	camera.position = new THREE.Vector3(0, 0,-10);
+	
 	renderer = new THREE.CanvasRenderer();
 	var sceneDiv = document.getElementById('sceneDiv');
 	renderer.setSize(imageWidth, imageHeight);
 	sceneDiv.appendChild(renderer.domElement);
 
-	var geometry = new THREE.CubeGeometry(10,0.1,8);
-	var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+	var geometry = new THREE.CubeGeometry(8,0.1,20);
+	var material = new THREE.MeshPhongMaterial({color: 0xffffff});
 	var plane = new THREE.Mesh(geometry, material);
 	plane.position = new THREE.Vector3(0, -5, 20);
 	scene.add(plane);
@@ -23,12 +32,16 @@ function setupScene() {
 	segments = 16,
 	rings = 16;
 
-	var sphereMaterial = new THREE.MeshBasicMaterial({color: 0xff00ff});
+	var sphereMaterial = new THREE.MeshPhongMaterial({color: 0xff00ff});
 	var sphere = new THREE.Mesh(new THREE.SphereGeometry(radius, segments, rings), sphereMaterial);
 	sphere.position = new THREE.Vector3(-2, -2, 25);
 	scene.add(sphere);
 
-	camera.position.z = -10;
+	var pointLight = new THREE.PointLight(0xFFFFFF);
+	pointLight.position = new THREE.Vector3(0, 0, 20);
+	pointLight.intensity = 1;
+	scene.add(pointLight);
+
 	sceneDiv.onclick = function() {
 		render();
 	}
@@ -57,7 +70,7 @@ function doRender() {
 				x: 0, y: 0, z: 1
 			},
 			width: 8,
-			height: 10,
+			height: 20,
 			material: {
 				type: 'diffuse',
 				color: {
@@ -96,7 +109,9 @@ function doRender() {
 			up: {
 				x: 0, y: 1, z: 0
 			},
-			zoom: 1,
+			fov: fov,
+			near: near,
+			far: far,
 			imageWidth: imageWidth,
 			imageHeight: imageHeight
 		}
