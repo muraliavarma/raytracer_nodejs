@@ -6,10 +6,24 @@
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="/js/connections.js"></script>
 		<script src="/js/scene.js"></script>
+		<script src="/js/menu.js"></script>
 	</head>
 	<body onload="setupScene()">
 		<div align="center"><h2>NodeJS Raytracer</h2></div>
-		<div id="sceneDiv"></div>
+		<div id="sceneDiv">
+			<div id="menu">
+				<table>
+					<tr>
+						<th>Menu</th>
+					</tr>
+					<tr>
+						<td><button type="button" onclick="addPrimitive('sphere')">Add Sphere</button></td>
+						<td><button type="button" onclick="addPrimitive('plane')">Add Plane</button></td>
+					</tr>
+				</table>
+				
+			</div>
+		</div>
 		<button type="button" onclick="doRender()">Render!</button>
 		<div id = "progress"></div>
 		<img id = "rendered"></img>

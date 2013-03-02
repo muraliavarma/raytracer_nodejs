@@ -46,15 +46,12 @@ function setupScene() {
 	sceneDiv.onclick = function() {
 		render();
 	}
-	function render() {
-
-		// plane.rotation.x += 0.1;
-		// plane.rotation.y += 0.1;
-
-		renderer.render(scene, camera);
-	}
 	render();
 
+}
+
+function render() {
+	renderer.render(scene, camera);
 }
 
 function doRender() {

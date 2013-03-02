@@ -12,10 +12,17 @@ body {
 	width: 500px;
 	height: 500px;
 	border: 1px dashed;
+	float: left;
 }
 
 #rendered {
 	width: 0px;
 	height: 0px;
 	border: 1px dashed;
+}
+
+#menu {
+	width: 300px;
+	height: 500px;
+	float: right;
 }
