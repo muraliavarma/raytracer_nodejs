@@ -26,3 +26,7 @@ body {
 	height: 500px;
 	float: right;
 }
+
+#menu table {
+	padding-bottom: 50px;
+}

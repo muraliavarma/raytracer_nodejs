@@ -6,12 +6,19 @@ var renderer;
 var fov;
 var near;
 var far;
+var mouse, pickedObject;
+var projector;
 
 function setupScene() {
 	scene = new THREE.Scene();
 	fov = 75;
 	near = 1;
 	far = 1000;
+
+	mouse = {
+		x: 0,
+		y: 0
+	};
 	
 	camera = new THREE.PerspectiveCamera(fov, imageWidth/imageHeight, near, far);
 	camera.name = 'camera001';
@@ -43,7 +50,11 @@ function setupScene() {
 	pointLight.intensity = 1;
 	scene.add(pointLight);
 
+	projector = new THREE.Projector();
+	document.addEventListener('mousemove', onCanvasMouseMove, false);
+
 	sceneDiv.onclick = function() {
+		pick();
 		render();
 	}
 	render();
@@ -137,4 +148,42 @@ function finishRenderedImage(data) {
 
 function parseScene() {
 
+}
+
+function pick() {
+	var vector = new THREE.Vector3(mouse.x, mouse.y, 1);
+	projector.unprojectVector(vector, camera);
+	var raycaster = new THREE.Raycaster(camera.position, vector.sub(camera.position).normalize());
+	var intersects = raycaster.intersectObjects(scene.children);
+
+	if (intersects.length > 0) {
+		if (pickedObject != intersects[0].object) {
+
+			if (pickedObject){
+				pickedObject.material.emissive.setHex(pickedObject.currentHex);
+			}
+			pickedObject = intersects[0].object;
+			pickedObject.currentHex = pickedObject.material.emissive.getHex();
+			pickedObject.material.emissive.setHex(0xff0000);
+		}
+	}
+	else {
+		if (pickedObject){
+			pickedObject.material.emissive.setHex(pickedObject.currentHex);
+		}
+		pickedObject = null;
+	}
+}
+
+function onCanvasMouseMove(event) {
+	var rect = sceneDiv.getElementsByTagName('canvas')[0].getBoundingClientRect();
+	event.preventDefault();
+	mouse.x = (event.clientX - rect.left);
+	mouse.y = (event.clientY - rect.top);
+	if (mouse.x > imageWidth || mouse.y > imageHeight) {
+		mouse.x = imageWidth + 1;
+		mouse.y = imageHeight + 1;
+	}
+	mouse.x = (mouse.x/imageWidth) * 2 - 1;
+	mouse.y = - (mouse.y/imageHeight) * 2 + 1;
 }
