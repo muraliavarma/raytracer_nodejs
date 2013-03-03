@@ -12,7 +12,7 @@
 		<div align="center"><h2>NodeJS Raytracer</h2></div>
 		<div id="sceneDiv">
 			<div id="menu">
-				<table>
+				<table id="actions">
 					<tr>
 						<th>Actions</th>
 					</tr>
@@ -22,12 +22,19 @@
 					</tr>
 				</table>
 				
-				<table>
+				<table id="attributes">
 					<tr>
 						<th>Attributes</th>
 					</tr>
-					<tr>
-						
+					<tr id="nameAttribute">
+						<td>Name : </td>
+						<td colspan="3"><input id="nameAttr"/></td>
+					</tr>
+					<tr id="posAttribute">
+						<td>Position : </td>
+						<td><input id="posAttrX"/></td>
+						<td><input id="posAttrY"/></td>
+						<td><input id="posAttrZ"/></td>
 					</tr>
 				</table>
 			</div>

@@ -56,6 +56,7 @@ function setupScene() {
 	sceneDiv.onclick = function() {
 		pick();
 		render();
+		showAttributes();
 	}
 	render();
 
@@ -151,6 +152,9 @@ function parseScene() {
 }
 
 function pick() {
+	if (mouse.x > 1) {
+		return;
+	}
 	var vector = new THREE.Vector3(mouse.x, mouse.y, 1);
 	projector.unprojectVector(vector, camera);
 	var raycaster = new THREE.Raycaster(camera.position, vector.sub(camera.position).normalize());
@@ -176,7 +180,7 @@ function pick() {
 }
 
 function onCanvasMouseMove(event) {
-	var rect = sceneDiv.getElementsByTagName('canvas')[0].getBoundingClientRect();
+	var rect = sceneDiv.getElementsByTagName('canvas')[0].getBoundingClientRect();	//TODO checking for nulls, and in many other places in the code
 	event.preventDefault();
 	mouse.x = (event.clientX - rect.left);
 	mouse.y = (event.clientY - rect.top);
@@ -186,4 +190,16 @@ function onCanvasMouseMove(event) {
 	}
 	mouse.x = (mouse.x/imageWidth) * 2 - 1;
 	mouse.y = - (mouse.y/imageHeight) * 2 + 1;
+}
+
+function showAttributes() {
+	var attributes = document.getElementById("attributes");
+	if (!pickedObject) {
+		attributes.style.display = "none";
+	}
+	else {
+		attributes.style.display = "block";
+		//name
+
+	}
 }
