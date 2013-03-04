@@ -42,7 +42,14 @@ function setupScene() {
 
 	addPrimitive({
 		type: 'sphere',
-		position: {x: 0, y: 0, z: 25}
+		position: {x: 0, y: 0, z: 25},
+		radius: 1,
+		material: {
+			shader: 'phong',
+			color: 0xff00ff,
+			diffuse: 1,
+			specular: 0
+		}
 	});
 
 	var pointLight = new THREE.PointLight(0xFFFFFF);
