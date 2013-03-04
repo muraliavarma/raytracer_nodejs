@@ -33,17 +33,21 @@ function setupScene() {
 	renderer.setSize(imageWidth, imageHeight);
 	sceneDiv.appendChild(renderer.domElement);
 
-	var geometry = new THREE.CubeGeometry(8,0.1,20);
-	var material = new THREE.MeshPhongMaterial({color: 0xffffff});
-	var plane = new THREE.Mesh(geometry, material);
-	plane.name = 'Plane001';
-	plane.position = new THREE.Vector3(0, -5, 20);
-	scene.add(plane);
+	addPrimitive({
+		type: 'plane',
+		position: {x: 0, y: 5, z: 20},
+		material: {
+			shader: 'phong',
+			color: 0x0000ff,
+			diffuse: 1,
+			specular: 0
+		}
+	});
 
 	addPrimitive({
 		type: 'sphere',
 		position: {x: 0, y: 0, z: 25},
-		radius: 1,
+		radius: 1,	//since radius is an attribute specific to spheres, there should be a provision for conditional attribute display 
 		material: {
 			shader: 'phong',
 			color: 0xff00ff,

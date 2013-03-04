@@ -31,6 +31,17 @@ function addPrimitive(opts) {
 	}
 	else if (opts.type == 'plane') {
 
+		var geometry = new THREE.CubeGeometry(8,0.1,20);
+		var plane = new THREE.Mesh(geometry, material);
+		plane.name = opts.name || 'Plane' + ++numPlanes;
+		if (opts.position) {
+			plane.position = new THREE.Vector3(opts.position.x, opts.position.y, opts.position.z);
+		}
+		else {
+			plane.position = new THREE.Vector3(0, -5, 20);
+		}
+		scene.add(plane);
+
 	}
 	render();
 }
