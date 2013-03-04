@@ -33,6 +33,7 @@ function setupScene() {
 	var geometry = new THREE.CubeGeometry(8,0.1,20);
 	var material = new THREE.MeshPhongMaterial({color: 0xffffff});
 	var plane = new THREE.Mesh(geometry, material);
+	plane.name = 'Plane001';
 	plane.position = new THREE.Vector3(0, -5, 20);
 	scene.add(plane);
 
@@ -43,6 +44,7 @@ function setupScene() {
 	var sphereMaterial = new THREE.MeshPhongMaterial({color: 0xff00ff});
 	var sphere = new THREE.Mesh(new THREE.SphereGeometry(radius, segments, rings), sphereMaterial);
 	sphere.position = new THREE.Vector3(-2, -2, 25);
+	sphere.name = 'Sphere001';
 	scene.add(sphere);
 
 	var pointLight = new THREE.PointLight(0xFFFFFF);
@@ -199,7 +201,9 @@ function showAttributes() {
 	}
 	else {
 		attributes.style.display = "block";
-		//name
-
+		nameAttr.value = pickedObject.name;
+		posAttrX.value = pickedObject.position.x;
+		posAttrY.value = pickedObject.position.y;
+		posAttrZ.value = pickedObject.position.z;
 	}
 }

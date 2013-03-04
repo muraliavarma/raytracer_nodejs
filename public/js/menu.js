@@ -1,5 +1,13 @@
-function addPrimitive(type) {
-	if (type == 'sphere') {
+function setupMenu() {
+	document.getElementById('attributes').onchange = function() {
+		pickedObject.name = nameAttr.value;
+		pickedObject.position = new THREE.Vector3(posAttrX.value, posAttrY.value, posAttrZ.value);
+		render();
+	}
+}
+
+function addPrimitive(opts) {
+	if (opts.type == 'sphere') {
 		var radius = 1,
 		segments = 16,
 		rings = 16;

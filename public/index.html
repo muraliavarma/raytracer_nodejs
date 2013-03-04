@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<title>NodeJS Raytracer</title>
+		<!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
 		<link rel="stylesheet" href="css/app.css">
 		<script src="/js/three.min.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
@@ -8,7 +9,7 @@
 		<script src="/js/scene.js"></script>
 		<script src="/js/menu.js"></script>
 	</head>
-	<body onload="setupScene()">
+	<body onload="setupScene(); setupMenu();">
 		<div align="center"><h2>NodeJS Raytracer</h2></div>
 		<div id="sceneDiv">
 			<div id="menu">
@@ -17,8 +18,8 @@
 						<th>Actions</th>
 					</tr>
 					<tr>
-						<td><button type="button" onclick="addPrimitive('sphere')">Add Sphere</button></td>
-						<td><button type="button" onclick="addPrimitive('plane')">Add Plane</button></td>
+						<td><button type="button" onclick="addPrimitive({type: 'sphere'})">Add Sphere</button></td>
+						<td><button type="button" onclick="addPrimitive({type: 'plane'})">Add Plane</button></td>
 					</tr>
 				</table>
 				
@@ -27,11 +28,11 @@
 						<th>Attributes</th>
 					</tr>
 					<tr id="nameAttribute">
-						<td>Name : </td>
+						<td>Name</td>
 						<td colspan="3"><input id="nameAttr"/></td>
 					</tr>
 					<tr id="posAttribute">
-						<td>Position : </td>
+						<td>Position</td>
 						<td><input id="posAttrX"/></td>
 						<td><input id="posAttrY"/></td>
 						<td><input id="posAttrZ"/></td>
