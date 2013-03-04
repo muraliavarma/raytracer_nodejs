@@ -9,6 +9,9 @@ var far;
 var mouse, pickedObject;
 var projector;
 
+var numSpheres = 0,
+	numPlanes = 0;
+
 function setupScene() {
 	scene = new THREE.Scene();
 	fov = 75;
@@ -37,15 +40,10 @@ function setupScene() {
 	plane.position = new THREE.Vector3(0, -5, 20);
 	scene.add(plane);
 
-	var radius = 1,
-	segments = 16,
-	rings = 16;
-
-	var sphereMaterial = new THREE.MeshPhongMaterial({color: 0xff00ff});
-	var sphere = new THREE.Mesh(new THREE.SphereGeometry(radius, segments, rings), sphereMaterial);
-	sphere.position = new THREE.Vector3(-2, -2, 25);
-	sphere.name = 'Sphere001';
-	scene.add(sphere);
+	addPrimitive({
+		type: 'sphere',
+		position: {x: 0, y: 0, z: 25}
+	});
 
 	var pointLight = new THREE.PointLight(0xFFFFFF);
 	pointLight.position = new THREE.Vector3(0, 0, 20);
@@ -202,7 +200,7 @@ function showAttributes() {
 	else {
 		attributes.style.display = "block";
 		nameAttr.value = pickedObject.name;
-		posAttrX.value = pickedObject.position.x;
+		posAttrX.value = -1 * pickedObject.position.x;
 		posAttrY.value = pickedObject.position.y;
 		posAttrZ.value = pickedObject.position.z;
 	}
