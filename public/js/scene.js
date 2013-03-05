@@ -10,7 +10,8 @@ var mouse, pickedObject;
 var projector;
 
 var numSpheres = 0,
-	numPlanes = 0;
+	numPlanes = 0,
+	numLights = 0;
 
 function setupScene() {
 	scene = new THREE.Scene();
@@ -56,10 +57,11 @@ function setupScene() {
 		}
 	});
 
-	var pointLight = new THREE.PointLight(0xFFFFFF);
-	pointLight.position = new THREE.Vector3(0, 0, 20);
-	pointLight.intensity = 1;
-	scene.add(pointLight);
+	addLight({
+		type: 'point',
+		position: {x: 0, y: 0, z: 20},
+		intensity: 1
+	})
 
 	projector = new THREE.Projector();
 	document.addEventListener('mousemove', onCanvasMouseMove, false);
