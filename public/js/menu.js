@@ -1,8 +1,8 @@
 function setupMenu() {
 	document.getElementById('attributes').onchange = function() {
 		pickedObject.name = nameAttr.value;
-		pickedObject.position = new THREE.Vector3(-1 * posAttrX.value, posAttrY.value, posAttrZ.value);
-		pickedObject.rotation = new THREE.Vector3(-1 * rotAttrX.value * Math.PI/180, rotAttrY.value * Math.PI/180, rotAttrZ.value * Math.PI/180);
+		pickedObject.position = new THREE.Vector3(posAttrX.value, posAttrY.value, posAttrZ.value);
+		pickedObject.rotation = new THREE.Vector3(rotAttrX.value * Math.PI/180, rotAttrY.value * Math.PI/180, rotAttrZ.value * Math.PI/180);
 		render();
 	}
 }
@@ -26,20 +26,20 @@ function addPrimitive(opts) {
 			sphere.position = new THREE.Vector3(opts.position.x, opts.position.y, opts.position.z);
 		}
 		else {
-			sphere.position = new THREE.Vector3(-2, -2, 25);
+			sphere.position = new THREE.Vector3(-2, -2, -25);
 		}
 		scene.add(sphere);
 	}
 	else if (opts.type == 'plane') {
 
-		var geometry = new THREE.CubeGeometry(8,0.1,20);
+		var geometry = new THREE.CubeGeometry(8, 0.1, 20);
 		var plane = new THREE.Mesh(geometry, material);
 		plane.name = opts.name || 'Plane' + ++numPlanes;
 		if (opts.position) {
 			plane.position = new THREE.Vector3(opts.position.x, opts.position.y, opts.position.z);
 		}
 		else {
-			plane.position = new THREE.Vector3(0, -5, 20);
+			plane.position = new THREE.Vector3(0, -5, -20);
 		}
 		scene.add(plane);
 

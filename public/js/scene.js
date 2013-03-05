@@ -26,8 +26,8 @@ function setupScene() {
 	
 	camera = new THREE.PerspectiveCamera(fov, imageWidth/imageHeight, near, far);
 	camera.name = 'camera001';
-	camera.lookAt(new THREE.Vector3(0, 0, 1));
-	camera.position = new THREE.Vector3(0, 0,-10);
+	camera.lookAt(new THREE.Vector3(0, 0, -1));
+	camera.position = new THREE.Vector3(0, 0, 10);
 	
 	renderer = new THREE.CanvasRenderer();
 	var sceneDiv = document.getElementById('sceneDiv');
@@ -36,7 +36,7 @@ function setupScene() {
 
 	addPrimitive({
 		type: 'plane',
-		position: {x: 0, y: -5, z: 20},
+		position: {x: 0, y: -5, z: -20},
 		material: {
 			shader: 'phong',
 			color: 0x0000ff,
@@ -47,7 +47,7 @@ function setupScene() {
 
 	addPrimitive({
 		type: 'sphere',
-		position: {x: 0, y: 0, z: 25},
+		position: {x: 0, y: 0, z: -25},
 		radius: 1,	//since radius is an attribute specific to spheres, there should be a provision for conditional attribute display 
 		material: {
 			shader: 'phong',
@@ -59,7 +59,7 @@ function setupScene() {
 
 	addLight({
 		type: 'point',
-		position: {x: 0, y: 0, z: 20},
+		position: {x: 0, y: 0, z: -20},
 		intensity: 1
 	})
 
@@ -167,17 +167,17 @@ function parseScene() {
 		lights: [],
 		camera: {
 			position: {
-				x: -1*camera.position.x,
+				x: camera.position.x,
 				y: camera.position.y,
 				z: camera.position.z
 			},
 			look: {
-				x: -1*cameraLookAt.x,
+				x: cameraLookAt.x,
 				y: cameraLookAt.y,
 				z: cameraLookAt.z
 			},
 			up: {
-				x: -1*camera.up.x,
+				x: camera.up.x,
 				y: camera.up.y,
 				z: camera.up.z
 			},
@@ -197,7 +197,7 @@ function parseScene() {
 			if (child.name.toLowerCase().indexOf('point') >= 0) {
 				light.type = 'point';
 				light.position = {
-					x: -1*child.position.x,
+					x: child.position.x,
 					y: child.position.y,
 					z: child.position.z
 				};
@@ -216,7 +216,7 @@ function parseScene() {
 			//then this child is a 3D object (as of now unless there are more types of objects in the scene)
 			var primitive = {};
 			primitive.center = {
-				x: -1*child.position.x,
+				x: child.position.x,
 				y: child.position.y,
 				z: child.position.z
 			};
@@ -316,11 +316,11 @@ function showAttributes() {
 		attributes.style.display = "block";
 		nameAttr.value = pickedObject.name;
 
-		posAttrX.value = -1 * pickedObject.position.x;
+		posAttrX.value = pickedObject.position.x;
 		posAttrY.value = pickedObject.position.y;
 		posAttrZ.value = pickedObject.position.z;
 
-		rotAttrX.value = -1 * pickedObject.rotation.x * 180/Math.PI;
+		rotAttrX.value = pickedObject.rotation.x * 180/Math.PI;
 		rotAttrY.value = pickedObject.rotation.y * 180/Math.PI;
 		rotAttrZ.value = pickedObject.rotation.z * 180/Math.PI;
 	}

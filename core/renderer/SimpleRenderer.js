@@ -17,7 +17,7 @@ exports.render = function(data, socket) {
 	var cameraRight = cameraUp.cross(cameraLook).normalize();
 	var aspectRatio = 1.0 * data.camera.imageWidth / data.camera.imageHeight;
 	var cameraPlaneCenter = cameraPos.add(cameraLook.normalize().multiply(data.camera.near));
-	var cameraPlane = new Plane(cameraPlaneCenter, cameraLook.multiply(-1));
+	var cameraPlane = new Plane(cameraPlaneCenter, cameraLook);
 	var cameraVDist = 2 * Math.tan(data.camera.fov * Math.PI / 360) * data.camera.near;
 	var cameraHDist = cameraVDist * aspectRatio;
 
@@ -28,7 +28,7 @@ exports.render = function(data, socket) {
 	var fileName = "image_" + (new Date()).getTime();
 
 	for (var w = 0; w < data.camera.imageWidth; w++) {
-		var x = cameraHDist * ((w / data.camera.imageWidth) - 0.5);
+		var x = cameraHDist * (((png.width - w) / data.camera.imageWidth) - 0.5);
 		for (var h = 0; h < data.camera.imageHeight; h++) {
 			var idx = (png.width * (png.height - h) + w) << 2;
 			png.data[idx] = 0;
