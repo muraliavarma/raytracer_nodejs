@@ -86,7 +86,7 @@ function doRender() {
 				x: 0, y: -5, z: 20
 			},
 			normal: {
-				x: 0, y: 1, z: 0
+				x: 0, y: 0.54, z: 0.84
 			},
 			up: {
 				x: 0, y: 0, z: 1
@@ -211,8 +211,13 @@ function showAttributes() {
 	else {
 		attributes.style.display = "block";
 		nameAttr.value = pickedObject.name;
+
 		posAttrX.value = -1 * pickedObject.position.x;
 		posAttrY.value = pickedObject.position.y;
 		posAttrZ.value = pickedObject.position.z;
+
+		rotAttrX.value = -1 * pickedObject.rotation.x * 180/Math.PI;
+		rotAttrY.value = pickedObject.rotation.y * 180/Math.PI;
+		rotAttrZ.value = pickedObject.rotation.z * 180/Math.PI;
 	}
 }
