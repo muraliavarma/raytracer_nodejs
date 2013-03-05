@@ -52,7 +52,7 @@ function addLight(opts) {
 		var pointLight = new THREE.PointLight(opts.color || 0xFFFFFF);
 		pointLight.position = new THREE.Vector3(opts.position.x, opts.position.y, opts.position.z);
 		pointLight.intensity = opts.intensity || 1;
-		pointLight.name = opts.name || 'Light' + ++numLights;
+		pointLight.name = opts.name || 'PointLight' + ++numLights;
 		scene.add(pointLight);
 	}
 }

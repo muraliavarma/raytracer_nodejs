@@ -36,7 +36,7 @@ function setupScene() {
 
 	addPrimitive({
 		type: 'plane',
-		position: {x: 0, y: 5, z: 20},
+		position: {x: 0, y: -5, z: 20},
 		material: {
 			shader: 'phong',
 			color: 0x0000ff,
@@ -140,7 +140,7 @@ function doRender() {
 			imageHeight: imageHeight
 		}
 	};
-	socket.emit('doRender', sceneData);
+	socket.emit('doRender', sceneData2);
 }
 
 function initRenderedImage(data) {
@@ -161,7 +161,109 @@ function finishRenderedImage(data) {
 }
 
 function parseScene() {
+	var cameraLookAt = new THREE.Vector3(0, 0, -1).applyEuler(camera.rotation, camera.eulerOrder);
+	var ret = {
+		primitives: [],
+		lights: [],
+		camera: {
+			position: {
+				x: -1*camera.position.x,
+				y: camera.position.y,
+				z: camera.position.z
+			},
+			look: {
+				x: -1*cameraLookAt.x,
+				y: cameraLookAt.y,
+				z: cameraLookAt.z
+			},
+			up: {
+				x: -1*camera.up.x,
+				y: camera.up.y,
+				z: camera.up.z
+			},
+			fov: fov,
+			near: near,
+			far: far,
+			imageWidth: imageWidth,
+			imageHeight: imageHeight
+		}
+	};
 
+	for (var i = 0; i < scene.children.length; i++) {
+		var child = scene.children[i];
+		if (child.name.toLowerCase().indexOf('light') >= 0) {
+			//then this child is a light
+			var light = {};
+			if (child.name.toLowerCase().indexOf('point') >= 0) {
+				light.type = 'point';
+				light.position = {
+					x: -1*child.position.x,
+					y: child.position.y,
+					z: child.position.z
+				};
+				light.color = {
+					r: child.color.r * 255,
+					g: child.color.g * 255,
+					b: child.color.b * 255
+				};
+
+				//TODO intensity
+
+			}
+			ret.lights.push(light);
+		}
+		else {
+			//then this child is a 3D object (as of now unless there are more types of objects in the scene)
+			var primitive = {};
+			primitive.center = {
+				x: -1*child.position.x,
+				y: child.position.y,
+				z: child.position.z
+			};
+			if (child.name.toLowerCase().indexOf('sphere') >= 0) {
+				primitive.type = 'sphere';
+				primitive.radius = child.geometry.radius;
+				primitive.material = {
+					type: 'diffuse',
+					color: {
+						r: 255, g: 255, b: 255
+					}
+				};
+			}
+			else if (child.name.toLowerCase().indexOf('plane') >= 0) {
+				primitive.type = 'rectangle';
+				primitive.width = child.geometry.width;
+				primitive.height = child.geometry.depth;
+
+				var matrix = new THREE.Matrix4();
+				matrix.makeRotationX(child.rotation.x);
+				matrix.makeRotationY(child.rotation.y);
+				matrix.makeRotationZ(child.rotation.z);
+
+				var normalVector = new THREE.Vector3(0, 1, 0).applyMatrix4(matrix);
+				var upVector = new THREE.Vector3(0, 0, 1).applyMatrix4(matrix);
+				primitive.normal = {
+					x: normalVector.x,
+					y: normalVector.y,
+					z: normalVector.z
+				};
+				primitive.up = {
+					x: upVector.x,
+					y: upVector.y,
+					z: upVector.z
+				};
+
+				primitive.material = {
+					type: 'diffuse',
+					color: {
+						r: 255, g: 255, b: 255
+					}
+				};
+			}
+			ret.primitives.push(primitive);
+		}
+	}
+	return ret;
 }
 
 function pick() {
