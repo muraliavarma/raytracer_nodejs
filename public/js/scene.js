@@ -39,7 +39,9 @@ function setupScene() {
 		position: {x: 0, y: -5, z: -20},
 		material: {
 			shader: 'phong',
-			color: 0x0000ff,
+			color: {
+				r: 0, g: 0, b: 255
+			},
 			diffuse: 1,
 			specular: 0
 		}
@@ -51,7 +53,9 @@ function setupScene() {
 		radius: 1,	//since radius is an attribute specific to spheres, there should be a provision for conditional attribute display 
 		material: {
 			shader: 'phong',
-			color: 0xff00ff,
+			color: {
+				r: 255, g: 0, b: 255
+			},
 			diffuse: 1,
 			specular: 0
 		}
@@ -80,67 +84,7 @@ function render() {
 }
 
 function doRender() {
-	var sceneData2 = parseScene();
-	var sceneData = {
-		primitives: [{
-			type: 'rectangle',
-			center: {
-				x: 0, y: -5, z: 20
-			},
-			normal: {
-				x: 0, y: 0.54, z: 0.84
-			},
-			up: {
-				x: 0, y: 0, z: 1
-			},
-			width: 8,
-			height: 20,
-			material: {
-				type: 'diffuse',
-				color: {
-					r: 255, g: 255, b: 255
-				}
-			}
-		},{
-			type: 'sphere',
-			center: {
-				x: 2, y: -2, z: 25
-			},
-			radius: 1,
-			material: {
-				type: 'diffuse',
-				color: {
-					r: 255, g: 0, b: 255
-				}
-			}
-		}],
-		lights: [{
-			type: 'point',
-			position: {
-				x: 0, y: 0, z: 20
-			},
-			color: {
-				r: 100, g: 100, b: 100
-			}
-		}],
-		camera: {
-			position: {
-				x: 0, y: 0, z: -10
-			},
-			look: {
-				x: 0, y: 0, z: 1
-			},
-			up: {
-				x: 0, y: 1, z: 0
-			},
-			fov: fov,
-			near: near,
-			far: far,
-			imageWidth: imageWidth,
-			imageHeight: imageHeight
-		}
-	};
-	socket.emit('doRender', sceneData2);
+	socket.emit('doRender', parseScene());
 }
 
 function initRenderedImage(data) {
@@ -223,12 +167,6 @@ function parseScene() {
 			if (child.name.toLowerCase().indexOf('sphere') >= 0) {
 				primitive.type = 'sphere';
 				primitive.radius = child.geometry.radius;
-				primitive.material = {
-					type: 'diffuse',
-					color: {
-						r: 255, g: 255, b: 255
-					}
-				};
 			}
 			else if (child.name.toLowerCase().indexOf('plane') >= 0) {
 				primitive.type = 'rectangle';
@@ -250,14 +188,8 @@ function parseScene() {
 					y: upVector.y,
 					z: upVector.z
 				};
-
-				primitive.material = {
-					type: 'diffuse',
-					color: {
-						r: 255, g: 255, b: 255
-					}
-				};
 			}
+			primitive.material = child.material2;
 			ret.primitives.push(primitive);
 		}
 	}

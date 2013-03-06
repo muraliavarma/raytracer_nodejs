@@ -1,13 +1,14 @@
 var Point = require('../common/Point');
 var Vector = require('../common/Vector');
+var Ray = require('../common/Ray');
 
 var Plane = require('../primitive/Plane');
 var Rectangle = require('../primitive/Rectangle');
 var Sphere = require('../primitive/Sphere');
 
-var Ray = require('../common/Ray');
-
 var PointLight = require('../light/PointLight');
+
+var PhongShader = require('../shader/PhongShader');
 
 function Scene(data) {
 	//camera
@@ -41,7 +42,12 @@ function Scene(data) {
 		else if (primitive.type == "sphere") {
 			shape = new Sphere(primitive.center.x, primitive.center.y, primitive.center.z, primitive.radius);
 		}
-		shape.material = primitive.material;
+		if (!primitive.material || !primitive.material.shader) {
+			shape.material = new PhongShader(null);
+		}
+		else if (primitive.material.shader == 'phong') {
+			shape.material = new PhongShader(primitive.material);
+		}
 		this.primitives.push(shape);
 	}
 
@@ -75,18 +81,6 @@ Scene.prototype.getClosestIntersection = function(ray) {
 		}
 	}
 	return closestIntersection;
-	// if (intersectionPoint) {
-	// 	var color = _getColor(data.lights, primitive.material, intersectionPoint, shape.getNormal(intersectionPoint));
-	// 	png.data[idx] = color.r;
-	// 	png.data[idx+1] = color.g;
-	// 	png.data[idx+2] = color.b;
-	// 	png.data[idx+3] = 255;
-	// }
-	// else {
-
-	// }
-
-	// return intersectionPoint;
 }
 
 module.exports = Scene;

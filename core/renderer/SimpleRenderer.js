@@ -43,13 +43,14 @@ exports.render = function(data, socket) {
 
 			var primitive = closestIntersection.primitive;
 
-			var color = _getColor(data.lights, primitive.material, closestIntersection.point, primitive.getNormal(closestIntersection.point));
+			var color = primitive.material.getColor(scene.lights, closestIntersection.point, primitive.getNormal(closestIntersection.point));
+			//_getColor(data.lights, primitive.material, closestIntersection.point, primitive.getNormal(closestIntersection.point));
 			png.data[idx] = color.r;
 			png.data[idx+1] = color.g;
 			png.data[idx+2] = color.b;
 			png.data[idx+3] = 255;
 		}
-		
+
 		var percent = (100.0 * w/scene.camera.imageWidth) | 0;
 		socket.emit('renderProgress', {
 			percent: percent
@@ -67,21 +68,4 @@ exports.render = function(data, socket) {
 			fileName: fileName
 		});
     });
-}
-
-function _getColor(lights, material, point, normal) {
-	var color = new Color(material.color.r, material.color.g, material.color.b);
-	var res = new Color(0, 0, 0);
-	for (var i = 0; i < lights.length; i++) {
-		var light = lights[i];
-		var lightColor = new Color(light.color.r, light.color.g, light.color.b);
-		if (light.type == 'point') {
-			var lightVector = new Vector(light.position.x - point.x, light.position.y - point.y, light.position.z - point.z).normalize();
-			var dot = normal.dot(lightVector);
-			if (dot > 0) {
-				res.add(color.multiply(lightColor).multiply(dot));
-			}
-		}
-	}
-	return res.getColor();
 }

@@ -10,7 +10,11 @@ function setupMenu() {
 function addPrimitive(opts) {
 	var material;
 	if (opts.material && opts.material.shader == 'phong') {
-		material = new THREE.MeshPhongMaterial({color: opts.material.color});
+		material = new THREE.MeshPhongMaterial({
+			color: new THREE.Color().setRGB(
+				opts.material.color.r, opts.material.color.g, opts.material.color.b
+			)
+		});
 	}
 	else {
 		material = new THREE.MeshPhongMaterial({color: 0xaaaaaa});
@@ -28,6 +32,7 @@ function addPrimitive(opts) {
 		else {
 			sphere.position = new THREE.Vector3(-2, -2, -25);
 		}
+		sphere.material2 = opts.material;
 		scene.add(sphere);
 	}
 	else if (opts.type == 'plane') {
@@ -41,6 +46,7 @@ function addPrimitive(opts) {
 		else {
 			plane.position = new THREE.Vector3(0, -5, -20);
 		}
+		plane.material2 = opts.material;
 		scene.add(plane);
 
 	}
