@@ -35,36 +35,21 @@ exports.render = function(data, socket) {
 			var y = scene.camera.cameraVDist * ((h / scene.camera.imageHeight) - 0.5);
 			var cameraPlaneIntersectionPoint = scene.camera.cameraPlaneCenter.add(scene.camera.cameraRight.multiply(x)).add(scene.camera.cameraUp.multiply(y));
 			var ray = new Ray(scene.camera.cameraPos, scene.camera.cameraPos.vectorTo(cameraPlaneIntersectionPoint));
-			for (var i = 0; i < data.primitives.length; i++) {
-				var primitive = data.primitives[i];
-				var shape;
-				if (primitive.type == "rectangle") {
-					shape = new Rectangle(
-							new Point(primitive.center.x, primitive.center.y, primitive.center.z),
-							new Vector(primitive.normal.x, primitive.normal.y, primitive.normal.z),
-							new Vector(primitive.up.x, primitive.up.y, primitive.up.z),
-							primitive.width,
-							primitive.height
-						);
-				}
-				else if (primitive.type == "sphere") {
-					shape = new Sphere(primitive.center.x, primitive.center.y, primitive.center.z, primitive.radius);
-				}
-				else {
-					continue;
-				}
-				var intersectionPoint = shape.getIntersection(ray);
-				if (intersectionPoint) {
-					var color = _getColor(data.lights, primitive.material, intersectionPoint, shape.getNormal(intersectionPoint));
-					png.data[idx] = color.r;
-					png.data[idx+1] = color.g;
-					png.data[idx+2] = color.b;
-					png.data[idx+3] = 255;
-				}
-				else {
-				}
+
+			var closestIntersection = scene.getClosestIntersection(ray);
+			if (!closestIntersection || !closestIntersection.primitive) {
+				continue;
 			}
+
+			var primitive = closestIntersection.primitive;
+
+			var color = _getColor(data.lights, primitive.material, closestIntersection.point, primitive.getNormal(closestIntersection.point));
+			png.data[idx] = color.r;
+			png.data[idx+1] = color.g;
+			png.data[idx+2] = color.b;
+			png.data[idx+3] = 255;
 		}
+		
 		var percent = (100.0 * w/scene.camera.imageWidth) | 0;
 		socket.emit('renderProgress', {
 			percent: percent
