@@ -236,12 +236,10 @@ function parseScene() {
 				primitive.height = child.geometry.depth;
 
 				var matrix = new THREE.Matrix4();
-				matrix.makeRotationX(child.rotation.x);
-				matrix.makeRotationY(child.rotation.y);
-				matrix.makeRotationZ(child.rotation.z);
-
+				matrix.rotateX(child.rotation.x).rotateY(child.rotation.y).rotateZ(child.rotation.z);
 				var normalVector = new THREE.Vector3(0, 1, 0).applyMatrix4(matrix);
 				var upVector = new THREE.Vector3(0, 0, 1).applyMatrix4(matrix);
+
 				primitive.normal = {
 					x: normalVector.x,
 					y: normalVector.y,
