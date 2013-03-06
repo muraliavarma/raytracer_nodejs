@@ -6,20 +6,16 @@ var Plane = require('../primitive/Plane');
 var Rectangle = require('../primitive/Rectangle');
 var Sphere = require('../primitive/Sphere');
 
+var Scene = require('../common/Scene');
+
 var Color = require('../image/Color');
 var PNG = require("pngjs").PNG;
 var fs = require('fs');
 
 exports.render = function(data, socket) {
-	var cameraPos = new Point(data.camera.position);
-	var cameraLook = new Vector(data.camera.look).normalize();
-	var cameraUp = new Vector(data.camera.up).normalize();
-	var cameraRight = cameraUp.cross(cameraLook).normalize();
-	var aspectRatio = 1.0 * data.camera.imageWidth / data.camera.imageHeight;
-	var cameraPlaneCenter = cameraPos.add(cameraLook.normalize().multiply(data.camera.near));
-	var cameraPlane = new Plane(cameraPlaneCenter, cameraLook);
-	var cameraVDist = 2 * Math.tan(data.camera.fov * Math.PI / 360) * data.camera.near;
-	var cameraHDist = cameraVDist * aspectRatio;
+
+	//populate all camera, lights and primitive information into scene object
+	var scene = new Scene(data);
 
 	var png = new PNG({
 		height: data.camera.imageHeight,
@@ -27,8 +23,8 @@ exports.render = function(data, socket) {
 	});
 	var fileName = "image_" + (new Date()).getTime();
 
-	for (var w = 0; w < data.camera.imageWidth; w++) {
-		var x = cameraHDist * (((png.width - w) / data.camera.imageWidth) - 0.5);
+	for (var w = 0; w < scene.camera.imageWidth; w++) {
+		var x = scene.camera.cameraHDist * (((png.width - w) / scene.camera.imageWidth) - 0.5);
 		for (var h = 0; h < data.camera.imageHeight; h++) {
 			var idx = (png.width * (png.height - h) + w) << 2;
 			png.data[idx] = 0;
@@ -36,9 +32,9 @@ exports.render = function(data, socket) {
 			png.data[idx+2] = 0;
 			png.data[idx+3] = 255;
 
-			var y = cameraVDist * ((h / data.camera.imageHeight) - 0.5);
-			var cameraPlaneIntersectionPoint = cameraPlaneCenter.add(cameraRight.multiply(x)).add(cameraUp.multiply(y));
-			var ray = new Ray(cameraPos, cameraPos.vectorTo(cameraPlaneIntersectionPoint));
+			var y = scene.camera.cameraVDist * ((h / scene.camera.imageHeight) - 0.5);
+			var cameraPlaneIntersectionPoint = scene.camera.cameraPlaneCenter.add(scene.camera.cameraRight.multiply(x)).add(scene.camera.cameraUp.multiply(y));
+			var ray = new Ray(scene.camera.cameraPos, scene.camera.cameraPos.vectorTo(cameraPlaneIntersectionPoint));
 			for (var i = 0; i < data.primitives.length; i++) {
 				var primitive = data.primitives[i];
 				var shape;
@@ -69,7 +65,7 @@ exports.render = function(data, socket) {
 				}
 			}
 		}
-		var percent = (100.0 * w/data.camera.imageWidth) | 0;
+		var percent = (100.0 * w/scene.camera.imageWidth) | 0;
 		socket.emit('renderProgress', {
 			percent: percent
 		});
