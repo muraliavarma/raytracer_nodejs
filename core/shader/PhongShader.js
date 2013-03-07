@@ -16,7 +16,6 @@ function PhongShader(material) {
 PhongShader.prototype.getColor = function(lights, point, normal) {
 	//assumes fully diffuse for the time being with intensity = 1
 	var res = new Color(0, 0, 0);
-	// return new Color(200, 255, 255);
 	for (var i = 0; i < lights.length; i++) {
 		var light = lights[i];
 		if (light.type == 'point') {

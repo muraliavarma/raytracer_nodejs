@@ -47,7 +47,7 @@ Color.prototype.getHexString = function() {
 }
 
 Color.prototype.clone = function() {
-	return new Color(this.r * 255, this.g * 255, this.b * 255);
+	return new Color(this.r * 255, this.g * 255, this.b * 255, this.a * 255);
 }
 
 module.exports = Color;

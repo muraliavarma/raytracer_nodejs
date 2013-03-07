@@ -190,6 +190,11 @@ function parseScene() {
 				};
 			}
 			primitive.material = child.material2;
+			primitive.material.color = {
+				r: child.material.color.r,
+				g: child.material.color.g,
+				b: child.material.color.b
+			};
 			ret.primitives.push(primitive);
 		}
 	}
