@@ -1,8 +1,11 @@
-<html>
+<html ng-app="app">
 	<head>
 		<title>NodeJS Raytracer</title>
 		<!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
 		<link rel="stylesheet" href="css/app.css">
+		<script src="/js/angular.js"></script>
+		<script src="/js/controllers.js"></script>
+		<script src="/js/directives.js"></script>
 		<script src="/js/three.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="/js/connections.js"></script>
@@ -23,8 +26,9 @@
 					</tr>
 				</table>
 				
-				<table id="attributes">
+				<!-- <table id="attributes" ng-controller="AttributeCtrl">
 					<tr>
+						<td>{{pickedObject.name}}</td>
 						<th>Attributes</th>
 					</tr>
 					<tr id="nameAttribute">
@@ -43,7 +47,10 @@
 						<td><input id="rotAttrY"/></td>
 						<td><input id="rotAttrZ"/></td>
 					</tr>
-				</table>
+				</table> -->
+
+				<attribute id="attributes" ng-controller="AttributeCtrl">
+				</attribute>
 			</div>
 		</div>
 		<button type="button" onclick="doRender()">Render!</button>

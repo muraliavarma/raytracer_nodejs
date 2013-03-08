@@ -227,6 +227,9 @@ function pick() {
 		}
 		pickedObject = null;
 	}
+	angular.element(document.getElementById('attributes')).scope().$apply(function(scope){
+		scope.updateAttributes(pickedObject);
+	});
 }
 
 function onCanvasMouseMove(event) {
@@ -243,20 +246,22 @@ function onCanvasMouseMove(event) {
 }
 
 function showAttributes() {
-	var attributes = document.getElementById("attributes");
-	if (!pickedObject) {
-		attributes.style.display = "none";
-	}
-	else {
-		attributes.style.display = "block";
-		nameAttr.value = pickedObject.name;
+	// var attributes = document.getElementById("attributes");
+	// if (!pickedObject) {
+	// 	attributes.style.display = "none";
+	// }
+	// else {
+	// 	attributes.style.display = "block";
 
-		posAttrX.value = pickedObject.position.x;
-		posAttrY.value = pickedObject.position.y;
-		posAttrZ.value = pickedObject.position.z;
+	// 	//These won't work on all browsers coz I need to doc.getElem thingy. But have no fear, coz AngularJS is gonna save the day!
+	// 	nameAttr.value = pickedObject.name;
 
-		rotAttrX.value = pickedObject.rotation.x * 180/Math.PI;
-		rotAttrY.value = pickedObject.rotation.y * 180/Math.PI;
-		rotAttrZ.value = pickedObject.rotation.z * 180/Math.PI;
-	}
+	// 	posAttrX.value = pickedObject.position.x;
+	// 	posAttrY.value = pickedObject.position.y;
+	// 	posAttrZ.value = pickedObject.position.z;
+
+	// 	rotAttrX.value = pickedObject.rotation.x * 180/Math.PI;
+	// 	rotAttrY.value = pickedObject.rotation.y * 180/Math.PI;
+	// 	rotAttrZ.value = pickedObject.rotation.z * 180/Math.PI;
+	// }
 }

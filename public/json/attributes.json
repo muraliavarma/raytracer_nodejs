@@ -1,0 +1,22 @@
+{
+	"attributes": {
+		"name": {
+			"title": "Name",
+			"type": "text"
+		},
+		"position": {
+			"title": "Position",
+			"type" : "array",
+			"length": 3
+		},
+		"rotation": {
+			"title": "Rotation",
+			"type" : "array",
+			"length": 3
+		}
+	},
+	"picked": {
+		"sphere": ["name", "position", "rotation"],
+		"plane": ["name", "position", "rotation"]
+	}
+}

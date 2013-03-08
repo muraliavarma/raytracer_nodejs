@@ -31,10 +31,10 @@ body {
 	padding-bottom: 50px;
 }
 
-#attributes {
+/*#attributes {
 	display: none;
 }
-
+*/
 #attributes tr td input {
 	width: 30px;
 }
