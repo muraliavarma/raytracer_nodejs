@@ -5,11 +5,16 @@ function AttributeCtrl($scope, $http) {
 		$scope.data = data;
 	});
 
+	$scope.$watch('pickedObject', function() {
+		console.log(pickedObject);
+	});
+
 	$scope.updateAttributes = function(pickedObject) {
 		$scope.pickedObject = pickedObject;
 		var attrs = [];
 		if (!pickedObject) {
 			$scope.attributes = [];
+			return;
 		}
 		else if (pickedObject.name.indexOf('Plane') != -1) {
 			attrs = $scope.data.picked.plane;
@@ -23,9 +28,5 @@ function AttributeCtrl($scope, $http) {
 			var attr = attrs[i];
 			$scope.attributes.push($scope.data.attributes[attr]);
 		}
-	}
-
-	$scope.update = function() {
-		console.log("ASD");
 	}
 }

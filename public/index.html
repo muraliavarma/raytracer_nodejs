@@ -26,37 +26,18 @@
 					</tr>
 				</table>
 				
-				<!-- <table id="attributes" ng-controller="AttributeCtrl">
-					<tr>
-						<td>{{pickedObject.name}}</td>
-						<th>Attributes</th>
-					</tr>
-					<tr id="nameAttribute">
-						<td>Name</td>
-						<td colspan="3"><input id="nameAttr"/></td>
-					</tr>
-					<tr id="posAttribute">
-						<td>Position</td>
-						<td><input id="posAttrX"/></td>
-						<td><input id="posAttrY"/></td>
-						<td><input id="posAttrZ"/></td>
-					</tr>
-					<tr id="rotAttribute">
-						<td>Rotation</td>
-						<td><input id="rotAttrX"/></td>
-						<td><input id="rotAttrY"/></td>
-						<td><input id="rotAttrZ"/></td>
-					</tr>
-				</table> -->
-
 				<div id="attributes" ng-controller="AttributeCtrl" ng-show="pickedObject">
 					<h3>Attributes</h3>
 					<ul>
 						<li ng-repeat="attribute in attributes">
-							{{attribute.title}} : 
+							<span class="attributeTitle">{{attribute.title}} : </span>
 							<span ng-switch="attribute.type">
-								<input ng-switch-when="text" value="{{pickedObject.name}}"></input>
-								<span ng-switch-when="array">{{pickedObject.position}}</span>
+								<input ng-switch-when="text" ng-model="pickedObject[attribute.sceneIdx]"></input>
+								<span ng-switch-when="arrayXYZ" class="triInput">
+									<input ng-model="pickedObject[attribute.sceneIdx]['x']"></input>
+									<input ng-model="pickedObject[attribute.sceneIdx]['y']"></input>
+									<input ng-model="pickedObject[attribute.sceneIdx]['z']"></input>
+								</span>
 							</span>
 						</li>
 					</ul>

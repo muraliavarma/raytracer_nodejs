@@ -73,7 +73,6 @@ function setupScene() {
 	sceneDiv.onclick = function() {
 		pick();
 		render();
-		showAttributes();
 	}
 	render();
 
@@ -243,25 +242,4 @@ function onCanvasMouseMove(event) {
 	}
 	mouse.x = (mouse.x/imageWidth) * 2 - 1;
 	mouse.y = - (mouse.y/imageHeight) * 2 + 1;
-}
-
-function showAttributes() {
-	// var attributes = document.getElementById("attributes");
-	// if (!pickedObject) {
-	// 	attributes.style.display = "none";
-	// }
-	// else {
-	// 	attributes.style.display = "block";
-
-	// 	//These won't work on all browsers coz I need to doc.getElem thingy. But have no fear, coz AngularJS is gonna save the day!
-	// 	nameAttr.value = pickedObject.name;
-
-	// 	posAttrX.value = pickedObject.position.x;
-	// 	posAttrY.value = pickedObject.position.y;
-	// 	posAttrZ.value = pickedObject.position.z;
-
-	// 	rotAttrX.value = pickedObject.rotation.x * 180/Math.PI;
-	// 	rotAttrY.value = pickedObject.rotation.y * 180/Math.PI;
-	// 	rotAttrZ.value = pickedObject.rotation.z * 180/Math.PI;
-	// }
 }

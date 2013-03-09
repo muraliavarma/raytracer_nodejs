@@ -2,17 +2,18 @@
 	"attributes": {
 		"name": {
 			"title": "Name",
-			"type": "text"
+			"type": "text",
+			"sceneIdx": "name"
 		},
 		"position": {
 			"title": "Position",
-			"type" : "array",
-			"items": ["x", "y", "z"]
+			"type" : "arrayXYZ",
+			"sceneIdx": "position"
 		},
 		"rotation": {
 			"title": "Rotation",
-			"type" : "array",
-			"items": ["x", "y", "z"]
+			"type" : "arrayXYZ",
+			"sceneIdx": "rotation"
 		}
 	},
 	"picked": {

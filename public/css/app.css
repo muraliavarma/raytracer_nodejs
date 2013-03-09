@@ -35,3 +35,16 @@ ul {
 	list-style-type: none;
 	padding: 0px;
 }
+
+input {
+	width: 100px;
+}
+
+.triInput input{
+	width: 30px;
+}
+
+.attributeTitle {
+	float: left;
+	width: 80px;
+}
