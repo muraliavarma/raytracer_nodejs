@@ -18,7 +18,7 @@
 			<div id="menu">
 				<table id="actions">
 					<tr>
-						<th>Actions</th>
+						<th><h3>Actions</h3></th>
 					</tr>
 					<tr>
 						<td><button type="button" onclick="addPrimitive({type: 'sphere'})">Add Sphere</button></td>
@@ -49,8 +49,18 @@
 					</tr>
 				</table> -->
 
-				<attribute id="attributes" ng-controller="AttributeCtrl">
-				</attribute>
+				<div id="attributes" ng-controller="AttributeCtrl" ng-show="pickedObject">
+					<h3>Attributes</h3>
+					<ul>
+						<li ng-repeat="attribute in attributes">
+							{{attribute.title}} : 
+							<span ng-switch="attribute.type">
+								<input ng-switch-when="text" value="{{pickedObject.name}}"></input>
+								<span ng-switch-when="array">{{pickedObject.position}}</span>
+							</span>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 		<button type="button" onclick="doRender()">Render!</button>

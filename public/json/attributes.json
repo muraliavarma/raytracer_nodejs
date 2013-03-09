@@ -7,16 +7,16 @@
 		"position": {
 			"title": "Position",
 			"type" : "array",
-			"length": 3
+			"items": ["x", "y", "z"]
 		},
 		"rotation": {
 			"title": "Rotation",
 			"type" : "array",
-			"length": 3
+			"items": ["x", "y", "z"]
 		}
 	},
 	"picked": {
 		"sphere": ["name", "position", "rotation"],
-		"plane": ["name", "position", "rotation"]
+		"plane": ["name", "position"]
 	}
 }

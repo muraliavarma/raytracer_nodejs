@@ -1,8 +1,8 @@
 function setupMenu() {
 	document.getElementById('attributes').onchange = function() {
-		pickedObject.name = nameAttr.value;
-		pickedObject.position = new THREE.Vector3(posAttrX.value, posAttrY.value, posAttrZ.value);
-		pickedObject.rotation = new THREE.Vector3(rotAttrX.value * Math.PI/180, rotAttrY.value * Math.PI/180, rotAttrZ.value * Math.PI/180);
+		// pickedObject.name = nameAttr.value;
+		// pickedObject.position = new THREE.Vector3(posAttrX.value, posAttrY.value, posAttrZ.value);
+		// pickedObject.rotation = new THREE.Vector3(rotAttrX.value * Math.PI/180, rotAttrY.value * Math.PI/180, rotAttrZ.value * Math.PI/180);
 		render();
 	}
 }

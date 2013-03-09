@@ -31,14 +31,7 @@ body {
 	padding-bottom: 50px;
 }
 
-/*#attributes {
-	display: none;
-}
-*/
-#attributes tr td input {
-	width: 30px;
-}
-
-#nameAttribute td input {
-	width: 100px !important;
+ul {
+	list-style-type: none;
+	padding: 0px;
 }
