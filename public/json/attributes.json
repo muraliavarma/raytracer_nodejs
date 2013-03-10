@@ -17,10 +17,20 @@
 			"items": ["x", "y", "z"],
 			"multiplier": "0.017453292519943295",
 			"sceneChain": ["rotation"]
+		},
+		"width": {
+			"title": "Width",
+			"type": "text",
+			"sceneChain": ["scale", "x"]
+		},
+		"height": {
+			"title": "Height",
+			"type": "text",
+			"sceneChain": ["scale", "z"]
 		}
 	},
 	"picked": {
 		"sphere": ["name", "position"],
-		"plane": ["name", "position", "rotation"]
+		"plane": ["name", "position", "rotation", "width", "height"]
 	}
 }

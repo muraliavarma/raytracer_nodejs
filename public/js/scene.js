@@ -169,8 +169,8 @@ function parseScene() {
 			}
 			else if (child.name.toLowerCase().indexOf('plane') >= 0) {
 				primitive.type = 'rectangle';
-				primitive.width = child.geometry.width;
-				primitive.height = child.geometry.depth;
+				primitive.width = child.scale.x;
+				primitive.height = child.scale.z;
 
 				var matrix = new THREE.Matrix4();
 				matrix.rotateX(child.rotation.x).rotateY(child.rotation.y).rotateZ(child.rotation.z);
