@@ -34,10 +34,35 @@
 			"items": ["x"],
 			"uniformScale": true,
 			"sceneChain": ["scale"]
+		},
+
+		"-": {
+			"type": "separator"
+		},
+
+		"color": {
+			"title": "Color",
+			"type" : "array",
+			"items": ["r", "g", "b"],
+			"multiplier": "1/255",
+			"sceneChain": ["material", "color"]
+		},
+
+		"shader": {
+			"title": "Shader",
+			"type": "select",
+			"items": [{
+				"name": "Phong",
+				"idx": "phong"
+				},{
+				"name": "Flat",
+				"idx": "flat"
+			}],
+			"sceneChain": ["material2", "shader"]
 		}
 	},
 	"picked": {
-		"sphere": ["name", "position", "radius"],
-		"plane": ["name", "position", "rotation", "width", "height"]
+		"sphere": ["name", "position", "radius", "-", "color", "shader"],
+		"plane": ["name", "position", "rotation", "width", "height", "-", "color", "shader"]
 	}
 }

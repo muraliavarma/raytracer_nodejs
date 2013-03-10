@@ -33,13 +33,19 @@
 							<span class="attributeTitle">{{attribute.title}}</span>
 							<span ng-switch="attribute.type">
 								<span ng-switch-when="text">
-									<!-- <input ng-model="pickedObject[attribute.sceneChain]"></input> -->
 									<input ng-model="sceneAttribute" scene-chain attribute="attribute" picked-object="pickedObject"></input>
 								</span>
 								<span ng-switch-when="array" class="triInput">
 									<span ng-repeat="item in attribute.items">
 										<input ng-model="sceneAttribute" scene-chain item="item" attribute="attribute" picked-object="pickedObject"></input>
 									</span>
+								</span>
+								<span ng-switch-when="separator">
+									<hr>
+								</span>
+								<span ng-switch-when="select">
+									<select ng-model="sceneAttribute" ng-options="item.idx as item.name for item in attribute.items"
+										attribute="attribute" picked-object="pickedObject" scene-chain></select>
 								</span>
 							</span>
 						</li>

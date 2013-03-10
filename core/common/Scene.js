@@ -48,6 +48,11 @@ function Scene(data) {
 		else if (primitive.material.shader == 'phong') {
 			shape.material = new PhongShader(primitive.material);
 		}
+		else if (primitive.material.shader == 'flat') {
+			//TODO - Flat Shader and many other cool shaders
+			console.error('Flat shader is not defined yet');
+			shape.material = new PhongShader(null);
+		}
 		this.primitives.push(shape);
 	}
 

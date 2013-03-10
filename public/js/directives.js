@@ -27,7 +27,16 @@ app.directive('sceneChain', function() {
 				if (scope.item) {
 					attr = attr[scope.item];
 				}
-				scope.sceneAttribute = scope.attribute.type == 'text' ? attr : attr / multiplier;
+				switch (scope.attribute.type) {
+					case 'text':
+					case 'select':
+						scope.sceneAttribute = attr;
+						break;
+					case 'array':
+						scope.sceneAttribute = attr / multiplier;
+						break;	
+				}
+				// scope.sceneAttribute = scope.attribute.type == 'text' ? attr : attr / multiplier;
 			}
 
 			function setAttrs() {
@@ -40,7 +49,7 @@ app.directive('sceneChain', function() {
 				for (var i = 0; i < chain.length - 1; i++) {
 					attr = attr[chain[i]];
 				}
-				if (scope.item) {
+				if (scope.attribute.type == 'array' && scope.item) {
 					attr[chain[chain.length-1]][scope.item] = scope.sceneAttribute * multiplier;
 					if (scope.attribute.uniformScale) {
 						if (scope.item == 'x') {
@@ -50,6 +59,9 @@ app.directive('sceneChain', function() {
 					}
 				}
 				else if (scope.attribute.type == 'text') {
+					attr[chain[chain.length-1]] = scope.sceneAttribute;
+				}
+				else if (scope.attribute.type == 'select') {
 					attr[chain[chain.length-1]] = scope.sceneAttribute;
 				}
 				render();
