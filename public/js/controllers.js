@@ -6,7 +6,7 @@ function AttributeCtrl($scope, $http) {
 	});
 
 	$scope.$watch('pickedObject', function() {
-		console.log(pickedObject);
+		// console.log(pickedObject);
 	});
 
 	$scope.updateAttributes = function(pickedObject) {

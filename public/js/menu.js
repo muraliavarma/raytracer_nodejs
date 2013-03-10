@@ -1,7 +1,5 @@
 function setupMenu() {
-	document.getElementById('attributes').onchange = function() {
-		render();
-	}
+	
 }
 
 function addPrimitive(opts) {

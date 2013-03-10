@@ -3,21 +3,24 @@
 		"name": {
 			"title": "Name",
 			"type": "text",
-			"sceneIdx": "name"
+			"sceneChain": ["name"]
 		},
 		"position": {
 			"title": "Position",
-			"type" : "arrayXYZ",
-			"sceneIdx": "position"
+			"type" : "array",
+			"items": ["x", "y", "z"],
+			"sceneChain": ["position"]
 		},
 		"rotation": {
 			"title": "Rotation",
-			"type" : "arrayXYZ",
-			"sceneIdx": "rotation"
+			"type" : "array",
+			"items": ["x", "y", "z"],
+			"multiplier": "0.017453292519943295",
+			"sceneChain": ["rotation"]
 		}
 	},
 	"picked": {
-		"sphere": ["name", "position", "rotation"],
-		"plane": ["name", "position"]
+		"sphere": ["name", "position"],
+		"plane": ["name", "position", "rotation"]
 	}
 }
