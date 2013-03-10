@@ -42,6 +42,12 @@ app.directive('sceneChain', function() {
 				}
 				if (scope.item) {
 					attr[chain[chain.length-1]][scope.item] = scope.sceneAttribute * multiplier;
+					if (scope.attribute.uniformScale) {
+						if (scope.item == 'x') {
+							attr[chain[chain.length-1]].y = attr[chain[chain.length-1]].x;
+							attr[chain[chain.length-1]].z = attr[chain[chain.length-1]].x;
+						}
+					}
 				}
 				else if (scope.attribute.type == 'text') {
 					attr[chain[chain.length-1]] = scope.sceneAttribute;

@@ -27,10 +27,17 @@
 			"title": "Height",
 			"type": "text",
 			"sceneChain": ["scale", "z"]
+		},
+		"radius": {
+			"title": "Radius",
+			"type": "array",
+			"items": ["x"],
+			"uniformScale": true,
+			"sceneChain": ["scale"]
 		}
 	},
 	"picked": {
-		"sphere": ["name", "position"],
+		"sphere": ["name", "position", "radius"],
 		"plane": ["name", "position", "rotation", "width", "height"]
 	}
 }

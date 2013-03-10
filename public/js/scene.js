@@ -50,7 +50,7 @@ function setupScene() {
 	addPrimitive({
 		type: 'sphere',
 		position: {x: 0, y: 0, z: -25},
-		radius: 1,	//since radius is an attribute specific to spheres, there should be a provision for conditional attribute display 
+		radius: 1,
 		material: {
 			shader: 'phong',
 			color: {
@@ -165,7 +165,7 @@ function parseScene() {
 			};
 			if (child.name.toLowerCase().indexOf('sphere') >= 0) {
 				primitive.type = 'sphere';
-				primitive.radius = child.geometry.radius;
+				primitive.radius = child.scale.x;
 			}
 			else if (child.name.toLowerCase().indexOf('plane') >= 0) {
 				primitive.type = 'rectangle';
